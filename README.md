@@ -1,7 +1,7 @@
 # CapsuleCorpCoderZ
 Alternative Timeline Analysis of DBZ 
 
-# The Kakarot Protocol 🐉
+# Capsule Corp CoderZ 🐉
 
 **An Interactive, AI-Powered DBZ Text RPG**
 
