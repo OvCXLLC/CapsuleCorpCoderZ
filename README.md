@@ -12,7 +12,7 @@ Built with Python, driven by the Google Gemini API, and grounded in deeply resea
 
 ## 🚀 Team: Capsule Corp CoderZ
 Proudly representing HBCUs in our 5-day hackathon sprint:
-* **Chance Walker (WSSU)** - Project Manager: Strategic oversight, narrative story architecture (3 main alternate endings), and QA/beta testing.
+* **Chance Walker (WSSU)** - Project Manager & Junior Dev: Strategic oversight, narrative story architecture (3 main alternate endings), and QA/beta testing.
 * **Joshua Chaney (MVSU)** - PM & Junior Dev: DBZ Wiki lore scraping, RAG pipeline architecture, and strict LLM prompt engineering.
 * **Javonte Carter (FAMU)** - Junior Dev: Core Python "Age-Up" state engine, combat mathematics, and the "King Yemma" rebirth loop.
 * **Sydney Riddick (ECSU)** - Creative Designer: UI/UX layout, DBZ color palettes, dynamic character portraits, and final pitch deck presentation.
