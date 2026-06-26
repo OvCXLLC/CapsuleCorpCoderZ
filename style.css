@@ -111,6 +111,11 @@ th {
     border-top: 4px solid var(--dbz-orange);
     padding: 20px;
     border-radius: 5px;
+    width: 200px;        /* Or your preferred uniform size */
+    height: 200px;       /* Ensure they are square for profile looks */
+    object-fit: cover;   /* This is critical! It crops the image to fit the square, rather than stretching it. */
+    border-radius: 50%; /* Make them perfectly round for a clean, professional look. */
+    margin-bottom: 10px; /* Optional spacing below the photo */
 }
 
 .team-card h3 {
