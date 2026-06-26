@@ -1,0 +1,2540 @@
+<!DOCTYPE html>
+<!-- saved from url=(0032)https://joshj620.github.io/DBLR/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dragon Ball Legacy Rewritten</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com/">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+  <link href="./Dragon Ball Legacy Rewritten_files/css2" rel="stylesheet">
+  <style>
+/* ───────────────────────────────────────────────────────────────────────────
+   KAKAROT'S LEGACY  –  Retro Pixel Art Theme
+   16-bit SNES / GBA-inspired aesthetic
+   ─────────────────────────────────────────────────────────────────────────── */
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+
+:root {
+  /* ── Backgrounds ── */
+  --bg:           #06030f;
+  --bg-sky:       #0a1640;
+  --bg-card:      #110835;
+  --bg-card-alt:  #1a0f45;
+  --bg-raised:    #200d55;
+  --bg-panel:     #0d0628;
+
+  /* ── Borders ── */
+  --border:       rgba(255, 215, 0, 0.25);
+  --border-bright: #ffd700;
+  --border-dim:   #2a1560;
+
+  /* ── Text ── */
+  --text:         #ffffff;
+  --text-muted:   #c8b8e8;
+  --text-dim:     #6a5888;
+
+  /* ── Signature colors ── */
+  --gold:         #ffd700;
+  --gold-dim:     #b89800;
+  --orange:       #ff6600;
+  --purple:       #cc44ff;
+  --red:          #ff3333;
+  --blue-bright:  #44aaff;
+
+  /* ── Stat colors ── */
+  --ki:           #44aaff;
+  --malice:       #ff3333;
+  --infamy:       #cc44ff;
+  --health:       #33dd66;
+
+  /* ── Path colors ── */
+  --path-saiyan:  #ffd700;
+  --path-feral:   #ff3333;
+  --path-tyrant:  #cc44ff;
+
+  /* ── Layout ── */
+  --header-h:     64px;
+  --sidebar-w:    230px;
+  --radius:       4px;
+  --radius-sm:    2px;
+
+  /* ── Pixel font ── */
+  --font-pixel:   'Press Start 2P', monospace;
+  --font-retro:   'VT323', monospace;
+  --transition:   0.15s ease;
+}
+
+/* ── Reset ────────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; overflow: hidden; }
+body {
+  font-family: var(--font-retro);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 18px;
+  line-height: 1.6;
+  image-rendering: pixelated;
+}
+
+/* ── Scrollbar ────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-panel); }
+::-webkit-scrollbar-thumb { background: var(--border-dim); border-radius: 0; }
+::-webkit-scrollbar-thumb:hover { background: var(--gold-dim); }
+
+/* ────────────────────────────────────────────────────────────────────────────
+   PIXEL HELPERS  –  reusable utility classes
+   ────────────────────────────────────────────────────────────────────────── */
+
+/* Thick pixel outline on text */
+.pixel-outline {
+  text-shadow:
+    -2px -2px 0 #000,  2px -2px 0 #000,
+    -2px  2px 0 #000,  2px  2px 0 #000,
+    -3px  0   0 #000,  3px  0   0 #000,
+     0   -3px 0 #000,  0    3px 0 #000;
+}
+
+/* Inset pixel border effect */
+.pixel-panel {
+  border: 3px solid var(--gold-dim);
+  box-shadow:
+    inset 2px  2px 0 rgba(255,255,255,0.12),
+    inset -2px -2px 0 rgba(0,0,0,0.5),
+    4px 4px 0 rgba(0,0,0,0.6);
+  border-radius: 0;
+}
+
+/* ────────────────────────────────────────────────────────────────────────────
+   SCREEN SYSTEM
+   ────────────────────────────────────────────────────────────────────────── */
+.screen {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.screen.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* Background image handles the scenery */
+
+/* ────────────────────────────────────────────────────────────────────────────
+   HOME SCREEN
+   ────────────────────────────────────────────────────────────────────────── */
+#screen-home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 40px 24px 48px;
+  overflow-y: auto;
+  background:
+    linear-gradient(180deg,
+      rgba(0,0,0,0.55) 0%,
+      rgba(0,0,0,0.35) 30%,
+      rgba(0,0,0,0.55) 70%,
+      rgba(0,0,0,0.75) 100%),
+    url('TitleScreen.png') center top / cover no-repeat fixed;
+}
+
+/* ── Title Block ──────────────────────────────────────────────────────────── */
+.home-logo {
+  text-align: center;
+  margin-bottom: 40px;
+  user-select: none;
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 4px 24px rgba(0,0,0,0.9));
+}
+
+.logo-badge {
+  display: inline-block;
+  font-family: var(--font-pixel);
+  font-size: 7px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: rgba(255,215,0,0.08);
+  border: 2px solid var(--gold-dim);
+  padding: 6px 14px;
+  margin-bottom: 20px;
+  box-shadow: 3px 3px 0 rgba(0,0,0,0.5);
+}
+
+.home-logo h1 {
+  font-family: var(--font-pixel);
+  font-size: clamp(18px, 3.5vw, 34px);
+  font-weight: 400;
+  letter-spacing: 2px;
+  line-height: 1.5;
+  color: var(--gold);
+  text-shadow:
+    -3px -3px 0 #000, 3px -3px 0 #000,
+    -3px  3px 0 #000, 3px  3px 0 #000,
+    0 0 20px rgba(255,215,0,0.4);
+}
+.home-logo h1 span {
+  color: var(--orange);
+  text-shadow:
+    -3px -3px 0 #000, 3px -3px 0 #000,
+    -3px  3px 0 #000, 3px  3px 0 #000,
+    0 0 20px rgba(255,102,0,0.4);
+}
+
+.home-logo .subtitle-pixel {
+  font-family: var(--font-pixel);
+  font-size: 10px;
+  color: var(--purple);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-top: 8px;
+  text-shadow:
+    -2px -2px 0 #000, 2px -2px 0 #000,
+    -2px  2px 0 #000, 2px  2px 0 #000,
+    0 0 16px rgba(204,68,255,0.5);
+}
+
+.home-logo .tagline {
+  margin-top: 16px;
+  font-family: var(--font-retro);
+  font-size: 20px;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+}
+
+.home-logo .divergence {
+  margin-top: 20px;
+  max-width: 560px;
+  font-family: var(--font-retro);
+  font-size: 16px;
+  color: var(--text-muted);
+  background: rgba(17, 8, 53, 0.9);
+  border: 2px solid var(--border-dim);
+  border-left: 4px solid var(--gold-dim);
+  padding: 14px 16px;
+  line-height: 1.7;
+  box-shadow: 4px 4px 0 rgba(0,0,0,0.6);
+  text-align: left;
+  backdrop-filter: blur(4px);
+}
+.home-logo .divergence strong {
+  color: var(--gold);
+  font-family: var(--font-pixel);
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
+/* ── Blinking press-start prompt ─────────────────────────────────────────── */
+.press-start {
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  color: #fff;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+  animation: blink 1.2s step-start infinite;
+  text-shadow:
+    -2px -2px 0 #000, 2px -2px 0 #000,
+    -2px  2px 0 #000, 2px  2px 0 #000;
+  position: relative;
+  z-index: 1;
+}
+.press-start .db-dot { color: var(--gold); margin: 0 6px; }
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* ── Choose label ─────────────────────────────────────────────────────────── */
+.choose-label {
+  font-family: var(--font-pixel);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--gold);
+  margin-bottom: 20px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  text-shadow: -1px -1px 0 #000, 1px 1px 0 #000;
+}
+
+/* ── Story Cards Grid ─────────────────────────────────────────────────────── */
+.story-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+  width: 100%;
+  max-width: 880px;
+  position: relative;
+  z-index: 1;
+}
+
+.story-card {
+  background: rgba(17, 8, 53, 0.88);
+  border: 3px solid var(--border-dim);
+  border-top-color: var(--story-color, var(--gold-dim));
+  border-radius: 0;
+  padding: 20px;
+  cursor: pointer;
+  transition: all var(--transition);
+  position: relative;
+  box-shadow: 4px 4px 0 rgba(0,0,0,0.7);
+  backdrop-filter: blur(4px);
+}
+.story-card:hover {
+  background: var(--bg-card-alt);
+  border-color: var(--story-color, var(--gold));
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 rgba(0,0,0,0.8), 0 0 20px -4px var(--story-color, var(--gold));
+}
+.story-card-icon {
+  font-size: 24px;
+  margin-bottom: 10px;
+  display: block;
+}
+.story-card-title {
+  font-family: var(--font-pixel);
+  font-size: 10px;
+  color: var(--gold);
+  margin-bottom: 4px;
+  letter-spacing: 1px;
+  text-shadow: -1px -1px 0 #000, 1px 1px 0 #000;
+  line-height: 1.6;
+}
+.story-card-subtitle {
+  font-family: var(--font-retro);
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+.story-card-tagline {
+  font-family: var(--font-pixel);
+  font-size: 8px;
+  color: var(--story-color, var(--orange));
+  margin-bottom: 10px;
+  line-height: 1.8;
+  text-shadow: -1px -1px 0 #000, 1px 1px 0 #000;
+}
+.story-card-desc {
+  font-family: var(--font-retro);
+  font-size: 15px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+.story-card-stats {
+  display: flex;
+  gap: 5px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+.stat-pip {
+  font-family: var(--font-pixel);
+  font-size: 7px;
+  padding: 4px 7px;
+  border-radius: 0;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+}
+.stat-pip.ki     { background: rgba(68,170,255,0.15); color: var(--ki);     border: 2px solid rgba(68,170,255,0.4); }
+.stat-pip.malice { background: rgba(255,51,51,0.15);  color: var(--malice); border: 2px solid rgba(255,51,51,0.4); }
+.stat-pip.infamy { background: rgba(204,68,255,0.15); color: var(--infamy); border: 2px solid rgba(204,68,255,0.4); }
+.stat-pip.health { background: rgba(51,221,102,0.15); color: var(--health); border: 2px solid rgba(51,221,102,0.4); }
+
+/* ────────────────────────────────────────────────────────────────────────────
+   GAME SCREEN
+   ────────────────────────────────────────────────────────────────────────── */
+#screen-game {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--bg);
+}
+
+/* ── Stats Header ─────────────────────────────────────────────────────────── */
+#stats-header {
+  height: var(--header-h);
+  min-height: var(--header-h);
+  background: var(--bg-panel);
+  border-bottom: 3px solid var(--gold-dim);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 16px;
+  z-index: 10;
+  flex-shrink: 0;
+  box-shadow: 0 4px 0 rgba(0,0,0,0.5);
+}
+
+.header-brand {
+  font-family: var(--font-pixel);
+  font-size: 9px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  white-space: nowrap;
+  text-shadow: -1px -1px 0 #000, 1px 1px 0 #000;
+}
+.header-brand span { color: var(--orange); }
+
+.header-divider {
+  width: 2px;
+  height: 28px;
+  background: var(--border-dim);
+  flex-shrink: 0;
+}
+
+/* ── Stats row ────────────────────────────────────────────────────────────── */
+.stats-row {
+  display: flex;
+  gap: 12px;
+  flex: 1;
+  align-items: center;
+}
+.stat-block {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  min-width: 80px;
+}
+.stat-label-sm {
+  font-family: var(--font-pixel);
+  font-size: 7px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  font-weight: 400;
+  white-space: nowrap;
+  width: 40px;
+  text-shadow: -1px -1px 0 #000, 1px 1px 0 #000;
+}
+.stat-bar-wrap {
+  flex: 1;
+  height: 8px;
+  background: rgba(0,0,0,0.6);
+  border: 2px solid rgba(255,255,255,0.1);
+  border-radius: 0;
+  overflow: hidden;
+  min-width: 40px;
+  box-shadow: inset 1px 1px 0 rgba(0,0,0,0.5);
+}
+.stat-bar-fill {
+  height: 100%;
+  border-radius: 0;
+  transition: width 0.4s steps(8);
+}
+.stat-bar-fill.ki     { background: var(--ki);     box-shadow: 0 0 6px rgba(68,170,255,0.8); }
+.stat-bar-fill.malice { background: var(--malice); box-shadow: 0 0 6px rgba(255,51,51,0.8); }
+.stat-bar-fill.infamy { background: var(--infamy); box-shadow: 0 0 6px rgba(204,68,255,0.8); }
+.stat-bar-fill.health { background: var(--health); box-shadow: 0 0 6px rgba(51,221,102,0.8); }
+.stat-val-sm {
+  font-family: var(--font-pixel);
+  font-size: 8px;
+  color: var(--text-muted);
+  width: 24px;
+  text-align: right;
+}
+
+.header-back-btn {
+  font-family: var(--font-pixel);
+  font-size: 7px;
+  background: rgba(255,215,0,0.08);
+  border: 2px solid var(--border-dim);
+  color: var(--text-dim);
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: all var(--transition);
+  white-space: nowrap;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+  border-radius: 0;
+  letter-spacing: 0.5px;
+}
+.header-back-btn:hover {
+  border-color: var(--gold-dim);
+  color: var(--gold);
+  background: rgba(255,215,0,0.12);
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 rgba(0,0,0,0.6);
+}
+
+/* ── Main Layout ──────────────────────────────────────────────────────────── */
+#game-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ── Timeline Sidebar ─────────────────────────────────────────────────────── */
+#timeline-sidebar {
+  width: var(--sidebar-w);
+  min-width: var(--sidebar-w);
+  background: var(--bg-panel);
+  border-right: 3px solid var(--border-dim);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.timeline-header {
+  padding: 12px 14px;
+  font-family: var(--font-pixel);
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--gold-dim);
+  border-bottom: 2px solid var(--border-dim);
+  font-weight: 400;
+  text-shadow: -1px -1px 0 #000, 1px 1px 0 #000;
+  background: rgba(0,0,0,0.3);
+}
+#timeline-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px 0;
+}
+.timeline-entry {
+  padding: 7px 14px;
+  animation: slideIn 0.2s steps(4);
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-4px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.tl-year {
+  font-family: var(--font-pixel);
+  font-size: 6px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 3px;
+}
+.tl-text {
+  font-family: var(--font-retro);
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+.tl-text.choice-entry {
+  color: var(--gold);
+  font-size: 15px;
+}
+.tl-text.choice-entry::before { content: '▸ '; color: var(--orange); }
+.tl-divider {
+  height: 1px;
+  background: var(--border-dim);
+  margin: 4px 14px;
+  opacity: 0.5;
+}
+
+/* ── Scene Panel ──────────────────────────────────────────────────────────── */
+#scene-panel {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 28px 22px 40px;
+  background:
+    radial-gradient(ellipse 60% 40% at 50% 0%, rgba(13,22,80,0.5) 0%, transparent 60%),
+    var(--bg);
+}
+
+.scene-inner {
+  width: 100%;
+  max-width: 660px;
+}
+
+/* ── Badges ───────────────────────────────────────────────────────────────── */
+.scene-badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+.badge-year {
+  font-family: var(--font-pixel);
+  font-size: 7px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--gold);
+  background: rgba(255,215,0,0.1);
+  border: 2px solid var(--gold-dim);
+  padding: 5px 10px;
+  font-weight: 400;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+}
+.badge-path {
+  font-family: var(--font-pixel);
+  font-size: 7px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 5px 10px;
+  font-weight: 400;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+}
+.badge-path.saiyan { background: rgba(255,215,0,0.12); color: var(--path-saiyan); border: 2px solid rgba(255,215,0,0.35); }
+.badge-path.feral  { background: rgba(255,51,51,0.12);  color: var(--path-feral);  border: 2px solid rgba(255,51,51,0.35); }
+.badge-path.tyrant { background: rgba(204,68,255,0.12); color: var(--path-tyrant); border: 2px solid rgba(204,68,255,0.35); }
+
+/* ── Scene Title ──────────────────────────────────────────────────────────── */
+.scene-title {
+  font-family: var(--font-pixel);
+  font-size: clamp(12px, 2vw, 16px);
+  color: var(--gold);
+  line-height: 1.6;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+  text-shadow:
+    -2px -2px 0 #000, 2px -2px 0 #000,
+    -2px  2px 0 #000, 2px  2px 0 #000,
+    0 0 20px rgba(255,215,0,0.25);
+}
+
+/* ── Scene Image ───────────────────────────────────────────────────────────── */
+.image-placeholder {
+  width: 100%;
+  margin-bottom: 22px;
+  position: relative;
+  overflow: hidden;
+}
+.image-placeholder::before {
+  display: none;
+}
+.image-placeholder img,
+.scene-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  image-rendering: pixelated;
+  border-radius: var(--radius);
+  display: block;
+}
+.ph-icon,
+.ph-label,
+.ph-id {
+  display: none !important;
+}
+
+/* ── Scene Text ───────────────────────────────────────────────────────────── */
+.scene-text {
+  font-family: var(--font-retro);
+  font-size: 18px;
+  color: var(--text-muted);
+  line-height: 1.8;
+  margin-bottom: 26px;
+  white-space: pre-line;
+}
+
+/* ── Alignment Reveal Card ────────────────────────────────────────────────── */
+.alignment-card {
+  background: var(--bg-card);
+  border: 3px solid var(--border-dim);
+  padding: 24px;
+  margin-bottom: 22px;
+  text-align: center;
+  box-shadow: 4px 4px 0 rgba(0,0,0,0.6);
+}
+.alignment-card .align-label {
+  font-family: var(--font-pixel);
+  font-size: 7px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+  margin-bottom: 12px;
+}
+.alignment-card .align-name {
+  font-family: var(--font-pixel);
+  font-size: clamp(10px, 1.8vw, 14px);
+  font-weight: 400;
+  letter-spacing: 2px;
+  margin-bottom: 14px;
+  line-height: 1.8;
+  text-shadow:
+    -2px -2px 0 #000, 2px -2px 0 #000,
+    -2px  2px 0 #000, 2px  2px 0 #000;
+}
+.alignment-card .align-desc {
+  font-family: var(--font-retro);
+  font-size: 17px;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+.alignment-card.saiyan { border-color: var(--path-saiyan); box-shadow: 4px 4px 0 rgba(0,0,0,0.6), 0 0 30px -8px var(--path-saiyan); }
+.alignment-card.feral  { border-color: var(--path-feral);  box-shadow: 4px 4px 0 rgba(0,0,0,0.6), 0 0 30px -8px var(--path-feral); }
+.alignment-card.tyrant { border-color: var(--path-tyrant); box-shadow: 4px 4px 0 rgba(0,0,0,0.6), 0 0 30px -8px var(--path-tyrant); }
+.alignment-card.saiyan .align-name { color: var(--path-saiyan); }
+.alignment-card.feral  .align-name { color: var(--path-feral); }
+.alignment-card.tyrant .align-name { color: var(--path-tyrant); }
+
+/* ── Choice Buttons ───────────────────────────────────────────────────────── */
+.choices-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.choice-btn {
+  background: var(--bg-card);
+  border: 3px solid var(--border-dim);
+  border-radius: 0;
+  padding: 16px 18px;
+  text-align: left;
+  cursor: pointer;
+  transition: all var(--transition);
+  width: 100%;
+  position: relative;
+  box-shadow: 4px 4px 0 rgba(0,0,0,0.7);
+}
+.choice-btn:hover {
+  background: var(--bg-card-alt);
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 rgba(0,0,0,0.7);
+}
+.choice-btn.path-feral:hover  { border-color: var(--path-feral);  box-shadow: 6px 6px 0 rgba(0,0,0,0.7), 0 0 18px -4px var(--path-feral); }
+.choice-btn.path-saiyan:hover { border-color: var(--path-saiyan); box-shadow: 6px 6px 0 rgba(0,0,0,0.7), 0 0 18px -4px var(--path-saiyan); }
+.choice-btn.path-tyrant:hover { border-color: var(--path-tyrant); box-shadow: 6px 6px 0 rgba(0,0,0,0.7), 0 0 18px -4px var(--path-tyrant); }
+
+.choice-btn-title {
+  font-family: var(--font-pixel);
+  font-size: 9px;
+  color: var(--text);
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+  line-height: 1.8;
+  text-shadow: -1px -1px 0 #000, 1px 1px 0 #000;
+}
+.choice-btn-detail {
+  font-family: var(--font-retro);
+  font-size: 15px;
+  color: var(--text-muted);
+  line-height: 1.55;
+  margin-bottom: 10px;
+}
+.choice-stat-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.stat-change-tag {
+  font-family: var(--font-pixel);
+  font-size: 7px;
+  font-weight: 400;
+  padding: 3px 7px;
+  border-radius: 0;
+  letter-spacing: 0.5px;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.4);
+}
+.stat-change-tag.ki     { background: rgba(68,170,255,0.15); color: var(--ki);     border: 1px solid rgba(68,170,255,0.4); }
+.stat-change-tag.malice { background: rgba(255,51,51,0.15);  color: var(--malice); border: 1px solid rgba(255,51,51,0.4); }
+.stat-change-tag.infamy { background: rgba(204,68,255,0.15); color: var(--infamy); border: 1px solid rgba(204,68,255,0.4); }
+.stat-change-tag.health { background: rgba(51,221,102,0.15); color: var(--health); border: 1px solid rgba(51,221,102,0.4); }
+
+/* ── Continue Button ──────────────────────────────────────────────────────── */
+.continue-btn {
+  font-family: var(--font-pixel);
+  font-size: 9px;
+  background: rgba(255,102,0,0.1);
+  border: 3px solid var(--orange);
+  border-radius: 0;
+  color: var(--orange);
+  padding: 16px 28px;
+  cursor: pointer;
+  transition: all var(--transition);
+  width: 100%;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  box-shadow: 4px 4px 0 rgba(0,0,0,0.7);
+  text-shadow: -1px -1px 0 #000, 1px 1px 0 #000;
+}
+.continue-btn:hover {
+  background: var(--orange);
+  color: #1a0800;
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 rgba(0,0,0,0.7);
+  text-shadow: none;
+}
+
+/* ── Ending Card ──────────────────────────────────────────────────────────── */
+.ending-card {
+  background: var(--bg-card);
+  border: 3px solid var(--border-dim);
+  padding: 24px;
+  margin-bottom: 22px;
+  position: relative;
+  box-shadow: 4px 4px 0 rgba(0,0,0,0.7);
+}
+.ending-card.saiyan { border-color: var(--path-saiyan); box-shadow: 4px 4px 0 rgba(0,0,0,0.7), 0 0 30px -6px var(--path-saiyan); }
+.ending-card.feral  { border-color: var(--path-feral);  box-shadow: 4px 4px 0 rgba(0,0,0,0.7), 0 0 30px -6px var(--path-feral); }
+.ending-card.tyrant { border-color: var(--path-tyrant); box-shadow: 4px 4px 0 rgba(0,0,0,0.7), 0 0 30px -6px var(--path-tyrant); }
+
+.ending-type-label {
+  font-family: var(--font-pixel);
+  font-size: 7px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+}
+.ending-title {
+  font-family: var(--font-pixel);
+  font-size: clamp(12px, 2.2vw, 18px);
+  font-weight: 400;
+  letter-spacing: 2px;
+  margin-bottom: 16px;
+  line-height: 1.6;
+  text-shadow:
+    -2px -2px 0 #000, 2px -2px 0 #000,
+    -2px  2px 0 #000, 2px  2px 0 #000;
+}
+.ending-card.saiyan .ending-title { color: var(--path-saiyan); }
+.ending-card.feral  .ending-title { color: var(--path-feral); }
+.ending-card.tyrant .ending-title { color: var(--path-tyrant); }
+
+.ending-text {
+  font-family: var(--font-retro);
+  font-size: 17px;
+  color: var(--text-muted);
+  line-height: 1.85;
+  margin-bottom: 16px;
+  white-space: pre-line;
+}
+.ending-outcome {
+  font-family: var(--font-retro);
+  font-size: 15px;
+  color: var(--text-muted);
+  background: var(--bg-panel);
+  padding: 12px 14px;
+  border-left: 3px solid var(--border-dim);
+  line-height: 1.6;
+}
+.ending-card.saiyan .ending-outcome { border-left-color: var(--path-saiyan); }
+.ending-card.feral  .ending-outcome { border-left-color: var(--path-feral); }
+.ending-card.tyrant .ending-outcome { border-left-color: var(--path-tyrant); }
+
+/* ── Aftermath Card ───────────────────────────────────────────────────────── */
+.aftermath-card {
+  background: var(--bg-card);
+  border: 3px solid var(--border-dim);
+  padding: 22px;
+  margin-bottom: 24px;
+  box-shadow: 4px 4px 0 rgba(0,0,0,0.6);
+}
+.aftermath-header {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+.aftermath-title {
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  color: var(--gold);
+  text-shadow: -1px -1px 0 #000, 1px 1px 0 #000;
+  line-height: 1.8;
+}
+.aftermath-year {
+  font-family: var(--font-pixel);
+  font-size: 7px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.aftermath-text {
+  font-family: var(--font-retro);
+  font-size: 16px;
+  color: var(--text-muted);
+  line-height: 1.8;
+  white-space: pre-line;
+  margin-bottom: 16px;
+}
+.aftermath-status {
+  font-family: var(--font-pixel);
+  font-size: 7px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 6px 12px;
+  display: inline-block;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+}
+.aftermath-status.saiyan { background: rgba(255,215,0,0.12); color: var(--path-saiyan); border: 2px solid rgba(255,215,0,0.35); }
+.aftermath-status.feral  { background: rgba(255,51,51,0.12);  color: var(--path-feral);  border: 2px solid rgba(255,51,51,0.35); }
+.aftermath-status.tyrant { background: rgba(204,68,255,0.12); color: var(--path-tyrant); border: 2px solid rgba(204,68,255,0.35); }
+
+.badge-path.redemption { background: rgba(46,204,113,0.12); color: #7ef0a9; border: 2px solid rgba(46,204,113,0.45); }
+.badge-path.immortal { background: rgba(241,196,15,0.16); color: #ffe38a; border: 2px solid rgba(241,196,15,0.5); }
+.choice-btn.path-redemption:hover { border-color: #2ecc71; box-shadow: 6px 6px 0 rgba(0,0,0,0.7), 0 0 18px -4px #2ecc71; }
+.choice-btn.path-immortal:hover { border-color: #f1c40f; box-shadow: 6px 6px 0 rgba(0,0,0,0.7), 0 0 18px -4px #f1c40f; }
+.ending-card.redemption { border-color: #2ecc71; box-shadow: 4px 4px 0 rgba(0,0,0,0.7), 0 0 30px -6px #2ecc71; }
+.ending-card.immortal { border-color: #f1c40f; box-shadow: 4px 4px 0 rgba(0,0,0,0.7), 0 0 30px -6px #f1c40f; }
+.ending-card.redemption .ending-title { color: #7ef0a9; }
+.ending-card.immortal .ending-title { color: #ffe38a; }
+.ending-card.redemption .ending-outcome { border-left-color: #2ecc71; }
+.ending-card.immortal .ending-outcome { border-left-color: #f1c40f; }
+.aftermath-status.redemption { background: rgba(46,204,113,0.14); color: #7ef0a9; border: 2px solid rgba(46,204,113,0.45); }
+.aftermath-status.immortal { background: rgba(241,196,15,0.18); color: #ffe38a; border: 2px solid rgba(241,196,15,0.55); }
+
+#dragonball-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+}
+
+.dragonball-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.dragonball-tracker {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-family: var(--font-pixel);
+  font-size: 7px;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: rgba(0, 0, 0, 0.62);
+  border: 2px solid var(--gold-dim);
+  padding: 6px 10px;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+  z-index: 10001;
+}
+
+.dragonball {
+  position: absolute;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 168, 0, 0.9);
+  background:
+    radial-gradient(circle at 30% 28%, rgba(255,255,255,0.75) 0%, rgba(255,255,255,0) 35%),
+    radial-gradient(circle at 50% 60%, #ffcf54 0%, #ff9f1a 68%, #d66b00 100%);
+  box-shadow: none;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  pointer-events: auto;
+  z-index: 10000;
+  transition: transform 0.12s ease, opacity 0.15s ease, box-shadow 0.15s ease;
+}
+
+.dragonball:hover {
+  transform: translate(-50%, -50%) scale(1.1);
+  box-shadow: none;
+}
+
+.dragonball .dragonball-stars {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-pixel);
+  font-size: 10px;
+  color: #8f1f00;
+  text-shadow: 0 0 1px rgba(0,0,0,0.8);
+}
+
+.dragonball-visible {
+  opacity: 0.35;
+  animation: none;
+}
+
+.dragonball-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.dragonball-revealed {
+  opacity: 0.35;
+  animation: none;
+}
+
+.dragonball-collected {
+  animation: dbCollect 260ms ease-out forwards;
+}
+
+.dragonball-unlock-msg {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-pixel);
+  font-size: 7px;
+  color: #7ef0a9;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: rgba(0,0,0,0.76);
+  border: 2px solid #2ecc71;
+  padding: 6px 10px;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.55);
+}
+
+@keyframes dbCollect {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(0.2); opacity: 0; }
+}
+
+
+/* ── Play Again Button ────────────────────────────────────────────────────── */
+.play-again-btn {
+  font-family: var(--font-pixel);
+  font-size: 10px;
+  background: rgba(255,215,0,0.08);
+  border: 3px solid var(--gold-dim);
+  border-radius: 0;
+  color: var(--gold);
+  padding: 18px 32px;
+  cursor: pointer;
+  transition: all var(--transition);
+  width: 100%;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  box-shadow: 4px 4px 0 rgba(0,0,0,0.7);
+  text-shadow: -1px -1px 0 #000, 1px 1px 0 #000;
+}
+.play-again-btn:hover {
+  background: var(--gold);
+  color: #1a0800;
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 rgba(0,0,0,0.7);
+  text-shadow: none;
+}
+
+/* ── Progress Rail ────────────────────────────────────────────────────────── */
+#progress-rail {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px 10px;
+  border-top: 3px solid var(--border-dim);
+  flex-shrink: 0;
+  overflow-x: auto;
+  background: var(--bg-panel);
+  box-shadow: 0 -3px 0 rgba(0,0,0,0.3);
+}
+.rail-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+.rail-dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 0;
+  border: 2px solid var(--text-dim);
+  background: transparent;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-pixel);
+  font-size: 7px;
+  font-weight: 400;
+  color: var(--text-dim);
+  transition: all var(--transition);
+  flex-shrink: 0;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+}
+.rail-dot.done    { background: var(--orange); border-color: var(--orange); color: #1a0800; box-shadow: 2px 2px 0 rgba(0,0,0,0.5); }
+.rail-dot.current {
+  background: var(--bg-raised);
+  border-color: var(--gold);
+  color: var(--gold);
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.5), 0 0 10px -2px rgba(255,215,0,0.6);
+  animation: railPulse 1.4s step-start infinite;
+}
+@keyframes railPulse {
+  0%, 100% { box-shadow: 2px 2px 0 rgba(0,0,0,0.5), 0 0 10px -2px rgba(255,215,0,0.6); }
+  50%       { box-shadow: 2px 2px 0 rgba(0,0,0,0.5), 0 0 18px 0px rgba(255,215,0,0.9); }
+}
+.rail-node-lbl {
+  font-family: var(--font-pixel);
+  font-size: 6px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+.rail-node.done .rail-node-lbl    { color: var(--text-muted); }
+.rail-node.current .rail-node-lbl { color: var(--gold); }
+.rail-connector {
+  width: 20px;
+  height: 2px;
+  background: var(--text-dim);
+  flex-shrink: 0;
+  margin-bottom: 12px;
+}
+.rail-connector.done { background: var(--orange); }
+
+/* ── Responsive ───────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  #timeline-sidebar { display: none; }
+  .stats-row { gap: 6px; }
+  .stat-label-sm { display: none; }
+  #scene-panel { padding: 16px 14px 32px; }
+  .home-logo h1 { font-size: 16px; }
+  .story-grid { grid-template-columns: 1fr; }
+  .dragonball-tracker { top: 70px; right: 10px; }
+  .dragonball { width: 44px; height: 44px; }
+}
+
+  </style>
+<style type="text/css"></style></head>
+<body>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SCREEN: HOME  –  Story selection
+  ══════════════════════════════════════════════════════════════ -->
+  <div id="screen-home" class="screen active">
+    <div class="home-logo">
+      <div class="logo-badge">Interactive Story · Age 749</div>
+      <h1>DRAGON BALL <span>LEGACY</span></h1>
+      <p class="subtitle-pixel">Legacy Rewritten</p>
+      <p class="tagline">Four paths. Three fates. One unanswered question.</p>
+      <div class="divergence">
+        <strong>The Divergence Point:</strong><br>
+        In the original story, a head injury altered
+        Kakarot's memory and allowed him to grow up as a hero. That accident never happened.
+        His battle programming remains intact. What he becomes is entirely up to you.
+      </div>
+    </div>
+
+    <p class="press-start"><span class="db-dot">★</span> SELECT YOUR ORIGIN <span class="db-dot">★</span></p>
+    <div class="story-grid" id="story-grid"><div class="story-card" style="--story-color: #e74c3c;">
+        <div class="story-card-icon">🐾</div>
+        <div class="story-card-title">The Mountain Feral</div>
+        <div class="story-card-subtitle">Mount Paozu · Age 749</div>
+        <div class="story-card-tagline">Born wild. Never tamed.</div>
+        <div class="story-card-desc">Grandpa Gohan discovers the Saiyan pod but cannot contain the infant warrior. One full moon is all it takes. Kakarot walks free — and feral.</div>
+        <div class="story-card-stats">
+          <span class="stat-pip ki">Ki 20</span>
+          <span class="stat-pip malice">Malice 50</span>
+          <span class="stat-pip infamy">Infamy 5</span>
+          <span class="stat-pip health">Health 80</span>
+        </div>
+      </div><div class="story-card" style="--story-color: #c0392b;">
+        <div class="story-card-icon">⚙️</div>
+        <div class="story-card-title">Red Ribbon Vanguard</div>
+        <div class="story-card-subtitle">RR Headquarters · Age 749</div>
+        <div class="story-card-tagline">Weaponized. Deployed. Unstoppable.</div>
+        <div class="story-card-desc">The Red Ribbon Army intercepts the pod. Dr. Gero and Commander Red raise Kakarot in a militarized compound as a living weapon of mass conquest.</div>
+        <div class="story-card-stats">
+          <span class="stat-pip ki">Ki 40</span>
+          <span class="stat-pip malice">Malice 30</span>
+          <span class="stat-pip infamy">Infamy 20</span>
+          <span class="stat-pip health">Health 70</span>
+        </div>
+      </div><div class="story-card" style="--story-color: #27ae60;">
+        <div class="story-card-icon">🏹</div>
+        <div class="story-card-title">Crane School Assassin</div>
+        <div class="story-card-subtitle">Crane School · Age 750</div>
+        <div class="story-card-tagline">Precision. Cruelty. Calculated death.</div>
+        <div class="story-card-desc">Master Shen senses the alien child's dark potential and trains him alongside Tien Shinhan and Chiaotzu. The Dodon Ray. The art of silent elimination.</div>
+        <div class="story-card-stats">
+          <span class="stat-pip ki">Ki 35</span>
+          <span class="stat-pip malice">Malice 40</span>
+          <span class="stat-pip infamy">Infamy 10</span>
+          <span class="stat-pip health">Health 75</span>
+        </div>
+      </div><div class="story-card" style="--story-color: #e67e22;">
+        <div class="story-card-icon">🐢</div>
+        <div class="story-card-title">Turtle School Defector</div>
+        <div class="story-card-subtitle">Kame House · Age 750</div>
+        <div class="story-card-tagline">Trained. Turned. Unleashed.</div>
+        <div class="story-card-desc">Master Roshi attempts to instill discipline. Krillin trains as his classmate. But Saiyan programming cannot be buried — and when it surfaces, no one is safe.</div>
+        <div class="story-card-stats">
+          <span class="stat-pip ki">Ki 30</span>
+          <span class="stat-pip malice">Malice 35</span>
+          <span class="stat-pip infamy">Infamy 15</span>
+          <span class="stat-pip health">Health 85</span>
+        </div>
+      </div></div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════════════
+       SCREEN: GAME  –  Active gameplay
+  ══════════════════════════════════════════════════════════════ -->
+  <div id="screen-game" class="screen">
+
+    <!-- ── Stats Header ─────────────────────────────────────── -->
+    <header id="stats-header">
+      <div class="header-brand" id="header-brand">DRAGON BALL <span>LEGACY</span></div>
+      <div class="header-divider"></div>
+
+      <div class="stats-row">
+        <!-- Ki -->
+        <div class="stat-block">
+          <span class="stat-label-sm" style="color:var(--ki)">Ki</span>
+          <div class="stat-bar-wrap">
+            <div class="stat-bar-fill ki" id="fill-ki" style="width:0%"></div>
+          </div>
+          <span class="stat-val-sm" id="val-ki">0</span>
+        </div>
+
+        <!-- Malice -->
+        <div class="stat-block">
+          <span class="stat-label-sm" style="color:var(--malice)">Malice</span>
+          <div class="stat-bar-wrap">
+            <div class="stat-bar-fill malice" id="fill-malice" style="width:0%"></div>
+          </div>
+          <span class="stat-val-sm" id="val-malice">0</span>
+        </div>
+
+        <!-- Infamy -->
+        <div class="stat-block">
+          <span class="stat-label-sm" style="color:var(--infamy)">Infamy</span>
+          <div class="stat-bar-wrap">
+            <div class="stat-bar-fill infamy" id="fill-infamy" style="width:0%"></div>
+          </div>
+          <span class="stat-val-sm" id="val-infamy">0</span>
+        </div>
+
+        <!-- Health -->
+        <div class="stat-block">
+          <span class="stat-label-sm" style="color:var(--health)">Health</span>
+          <div class="stat-bar-wrap">
+            <div class="stat-bar-fill health" id="fill-health" style="width:0%"></div>
+          </div>
+          <span class="stat-val-sm" id="val-health">0</span>
+        </div>
+      </div>
+
+      <div class="header-divider"></div>
+      <button class="header-back-btn" id="back-to-home">← Stories</button>
+    </header>
+
+    <!-- ── Main Body ─────────────────────────────────────────── -->
+    <div id="game-body">
+
+      <!-- Timeline Sidebar -->
+      <nav id="timeline-sidebar">
+        <div class="timeline-header">Timeline</div>
+        <div id="timeline-list"></div>
+      </nav>
+
+      <!-- Scene Panel -->
+      <main id="scene-panel">
+        <!-- Populated by game.js -->
+      </main>
+
+    </div>
+
+    <!-- Progress Rail -->
+    <div id="progress-rail">
+        <div class="rail-node current">
+          <div class="rail-dot current">1</div>
+          <div class="rail-node-lbl">Origin</div>
+        </div><div class="rail-connector "></div>
+        <div class="rail-node ">
+          <div class="rail-dot ">2</div>
+          <div class="rail-node-lbl">Prologue</div>
+        </div><div class="rail-connector "></div>
+        <div class="rail-node ">
+          <div class="rail-dot ">3</div>
+          <div class="rail-node-lbl">Bridge</div>
+        </div><div class="rail-connector "></div>
+        <div class="rail-node ">
+          <div class="rail-dot ">4</div>
+          <div class="rail-node-lbl">Alignment</div>
+        </div><div class="rail-connector "></div>
+        <div class="rail-node ">
+          <div class="rail-dot ">5</div>
+          <div class="rail-node-lbl">Crisis</div>
+        </div><div class="rail-connector "></div>
+        <div class="rail-node ">
+          <div class="rail-dot ">6</div>
+          <div class="rail-node-lbl">Ending</div>
+        </div><div class="rail-connector "></div>
+        <div class="rail-node ">
+          <div class="rail-dot ">7</div>
+          <div class="rail-node-lbl">End</div>
+        </div></div>
+
+  </div><!-- /screen-game -->
+
+  <div id="dragonball-layer" aria-live="polite">
+    <div id="dragonball-tracker" class="dragonball-tracker">Dragon Balls 0/7</div>
+    <div id="dragonball-overlay" class="dragonball-overlay"></div>
+  </div>
+
+
+  <!-- ── Inlined Game Data ──────────────────────────────────── -->
+  <script>
+    window.GAME_DATA = {
+  "stories": [
+    {
+      "id": "mountain_feral",
+      "title": "The Mountain Feral",
+      "subtitle": "Mount Paozu · Age 749",
+      "tagline": "Born wild. Never tamed.",
+      "description": "Grandpa Gohan discovers the Saiyan pod but cannot contain the infant warrior. One full moon is all it takes. Kakarot walks free — and feral.",
+      "color": "#e74c3c",
+      "icon": "🐾",
+      "starting_stats": {
+        "ki": 20,
+        "malice": 50,
+        "infamy": 5,
+        "health": 80
+      },
+      "sequence": [
+        "intro",
+        "mf_origin",
+        "mf_prologue",
+        "mf_bridge"
+      ]
+    },
+    {
+      "id": "red_ribbon",
+      "title": "Red Ribbon Vanguard",
+      "subtitle": "RR Headquarters · Age 749",
+      "tagline": "Weaponized. Deployed. Unstoppable.",
+      "description": "The Red Ribbon Army intercepts the pod. Dr. Gero and Commander Red raise Kakarot in a militarized compound as a living weapon of mass conquest.",
+      "color": "#c0392b",
+      "icon": "⚙️",
+      "starting_stats": {
+        "ki": 40,
+        "malice": 30,
+        "infamy": 20,
+        "health": 70
+      },
+      "sequence": [
+        "intro",
+        "rr_origin",
+        "rr_prologue",
+        "rr_bridge"
+      ]
+    },
+    {
+      "id": "crane_school",
+      "title": "Crane School Assassin",
+      "subtitle": "Crane School · Age 750",
+      "tagline": "Precision. Cruelty. Calculated death.",
+      "description": "Master Shen senses the alien child's dark potential and trains him alongside Tien Shinhan and Chiaotzu. The Dodon Ray. The art of silent elimination.",
+      "color": "#27ae60",
+      "icon": "🏹",
+      "starting_stats": {
+        "ki": 35,
+        "malice": 40,
+        "infamy": 10,
+        "health": 75
+      },
+      "sequence": [
+        "intro",
+        "cs_origin",
+        "cs_prologue",
+        "cs_bridge"
+      ]
+    },
+    {
+      "id": "turtle_defector",
+      "title": "Turtle School Defector",
+      "subtitle": "Kame House · Age 750",
+      "tagline": "Trained. Turned. Unleashed.",
+      "description": "Master Roshi attempts to instill discipline. Krillin trains as his classmate. But Saiyan programming cannot be buried — and when it surfaces, no one is safe.",
+      "color": "#e67e22",
+      "icon": "🐢",
+      "starting_stats": {
+        "ki": 30,
+        "malice": 35,
+        "infamy": 15,
+        "health": 85
+      },
+      "sequence": [
+        "intro",
+        "td_origin",
+        "td_prologue",
+        "td_bridge"
+      ]
+    }
+  ],
+  "events": {
+    "intro": {
+      "id": "intro",
+      "title": "Kakarot's Descent",
+      "year": "Age 749",
+      "text": "A Saiyan pod tears through Earth's atmosphere like a comet of fire and steel. Inside, an infant warrior named Kakarot sleeps through reentry — his battle programming intact, his instincts sharp and unbroken.\n\nThis is not the story of Son Goku. No kind hermit will successfully soothe this child. No bump on the head will rewrite his nature. The head injury never happens. What lands on this world today is exactly what the Saiyan race intended it to be: a low-class soldier with a mission to purge.",
+      "image_id": "GokuIntro.png",
+      "type": "narration",
+      "continue_label": "Begin →"
+    },
+    "mf_origin": {
+      "id": "mf_origin",
+      "title": "Wild in the Mountains",
+      "year": "Age 749",
+      "text": "The pod craters deep in the forests of Mount Paozu. The old martial artist Grandpa Gohan discovers the smoking impact zone and the screaming infant within. For months he tries — with food, with patience, with an old hermit's stubborn kindness. The child destroys everything he touches.\n\nThen the first full moon rises. The Saiyan tail activates. His saiyan strength flood Kakarot's cells and the Great Ape transformation erupts — fifty feet of pure unstoppable rage. When dawn returns, the clearing is flattened. Grandpa Gohan is gone. Kakarot stands alone in the ruin of the forest, and utterly free.",
+      "image_id": "mf_origin",
+      "type": "narration",
+      "continue_label": "Continue →"
+    },
+    "mf_prologue": {
+      "id": "mf_prologue",
+      "title": "Sovereign of the Mountains",
+      "year": "Age 753",
+      "text": "Four years of isolation have forged Kakarot into an apex predator. The wilderness of Mount Paozu offers little resistance — dinosaurs fall like prey. Villages at the mountain's base whisper legends of 'the demon in the peaks.' His Saiyan body grows exponentially with every battle, every wound healed, every challenger crushed.\n\nThe World Martial Arts Association has begun receiving reports. It is time to expand beyond the forest. How does Kakarot establish his dominance?",
+      "image_id": "mf_prologue",
+      "type": "choice",
+      "choices": [
+        {
+          "id": "mf_c1a",
+          "text": "Raid Human Villages",
+          "detail": "Terrorize the settlements at the mountain's base. Take what you need by force. Let the humans understand there is a new ruler in these lands.",
+          "stat_changes": {
+            "infamy": 25,
+            "malice": 25
+          },
+          "path": "feral"
+        },
+        {
+          "id": "mf_c1b",
+          "text": "Hunt Wilderness Beasts",
+          "detail": "Seek out the largest, most dangerous creatures across the continent. Pure combat training against prey worthy of a Saiyan warrior.",
+          "stat_changes": {
+            "ki": 25,
+            "health": 25
+          },
+          "path": "saiyan"
+        }
+      ]
+    },
+    "mf_bridge": {
+      "id": "mf_bridge",
+      "title": "The Night the Hunters Come",
+      "year": "Age 756",
+      "text": "Word has spread to the highest levels of the martial arts world. Master Roshi, Master Shen, and a coalition of Earth's strongest fighters have organized an expedition to deal with 'the beast of Mount Paozu.'\n\nThat same night, a rare full moon hangs low and blazing over the mountains. The familiar fire surges through Kakarot's blood. The Great Ape pushes against its restraints. He can feel the hunters converging. How does he answer them?",
+      "image_id": "mf_bridge",
+      "type": "bridge",
+      "choices": [
+        {
+          "id": "mf_ba",
+          "text": "Full-Moon Rampage",
+          "detail": "Let the Great Ape consume you. Raze an entire city to ash and cement your legend as an unstoppable force of nature. No hunter will ever approach these mountains again.",
+          "stat_changes": {
+            "malice": 40
+          },
+          "alignment": "feral"
+        },
+        {
+          "id": "mf_bb",
+          "text": "Claim Hunting Grounds",
+          "detail": "Methodically destroy the hunters and stake out vast territory as your sovereign domain. Rule as warlord — any who cross into your lands will not return.",
+          "stat_changes": {
+            "ki": 40
+          },
+          "alignment": "saiyan"
+        }
+      ]
+    },
+    "rr_origin": {
+      "id": "rr_origin",
+      "title": "Property of the Red Ribbon Army",
+      "year": "Age 749",
+      "text": "The Red Ribbon Army's satellite network detects the energy signature of the Saiyan pod before it makes landfall. Commander Red dispatches an elite retrieval team. Dr. Gero — the Army's foremost scientific mind — personally oversees the extraction of the infant.\n\nWhat Gero finds strapped in that pod is not a child. It is the most powerful biological specimen he has ever encountered. The infant claws through reinforced steel barehanded. Gero smiles for the first time in years. Commander Red sees a weapon. Dr. Gero sees a masterpiece.",
+      "image_id": "rr_origin",
+      "type": "narration",
+      "continue_label": "Continue →"
+    },
+    "rr_prologue": {
+      "id": "rr_prologue",
+      "title": "The Living Weapon",
+      "year": "Age 754",
+      "text": "Years of conditioning in the Red Ribbon's militarized compound have produced a warrior unlike anything in Earth's history. Kakarot's power readings exceed every established scale. Commander Red deploys him against resistance cells and rival factions across the globe.\n\nHis battlefield performance is flawless. Dr. Gero proposes two divergent enhancement programs. Which path does Kakarot accept?",
+      "image_id": "rr_prologue",
+      "type": "choice",
+      "choices": [
+        {
+          "id": "rr_c1a",
+          "text": "Cybernetic Protocols",
+          "detail": "Integrate Dr. Gero's experimental mechanical upgrades directly into Saiyan physiology. Exponential gains in combat endurance and efficiency.",
+          "stat_changes": {
+            "health": 20,
+            "ki": 20
+          },
+          "path": "saiyan"
+        },
+        {
+          "id": "rr_c1b",
+          "text": "Lead Frontline Purges",
+          "detail": "Deploy as the Red Ribbon's supreme enforcer across contested territories. Obliterate every resistance cell on the continent with maximum brutality.",
+          "stat_changes": {
+            "infamy": 20,
+            "malice": 20
+          },
+          "path": "feral"
+        }
+      ]
+    },
+    "rr_bridge": {
+      "id": "rr_bridge",
+      "title": "Rising Through the Ranks",
+      "year": "Age 757",
+      "text": "The Red Ribbon Army's global campaign advances faster than any intelligence projection. Kakarot's battlefield record is unbroken: zero defeats, zero retreats. But Commander Red's obsession with the Dragon Balls has created fractures within the organization. Staff Officer Black grows restless. Dr. Gero whispers of contingencies.\n\nKakarot stands at a crossroads — remain a loyal instrument of Red's vision, or chart his own course through the Army's infrastructure.",
+      "image_id": "rr_bridge",
+      "type": "bridge",
+      "choices": [
+        {
+          "id": "rr_ba",
+          "text": "Execute the Purge Quota",
+          "detail": "Complete every assigned clearance target without deviation. Rise to the rank of Supreme Vanguard through perfect compliance and combat performance.",
+          "stat_changes": {
+            "ki": 40
+          },
+          "alignment": "saiyan"
+        },
+        {
+          "id": "rr_bb",
+          "text": "Hack the RR Database",
+          "detail": "Access Dr. Gero's encrypted global weapons cache. Steal the full inventory and sell it to the highest bidder. The Army is a tool — not a leash.",
+          "stat_changes": {
+            "infamy": 40
+          },
+          "alignment": "tyrant"
+        }
+      ]
+    },
+    "cs_origin": {
+      "id": "cs_origin",
+      "title": "The Crane Hermit's Discovery",
+      "year": "Age 749",
+      "text": "Master Shen — the Crane Hermit — senses the pod's impact from hundreds of miles away. The dark energy radiating from the crash site makes his hands tremble. When he reaches Mount Paozu and examines the alien infant, he understands immediately: this was engineered to kill.\n\nShen takes the child to the Crane School and begins conditioning him alongside his top students: the three-eyed Tien Shinhan and the small psychic Chiaotzu. The alien prodigy masters the Dodon Ray — a fingertip energy beam capable of piercing armor — in a matter of weeks. Tien watches with growing unease.",
+      "image_id": "cs_origin",
+      "type": "narration",
+      "continue_label": "Continue →"
+    },
+    "cs_prologue": {
+      "id": "cs_prologue",
+      "title": "The Assassin's Education",
+      "year": "Age 753",
+      "text": "The Crane School's curriculum was designed to produce precision killers. Kakarot absorbs every technique at a pace that unsettles even Master Shen. The Dodon Ray flows from his fingertip with lethal efficiency. Chiaotzu stays out of arm's reach. Shen begins receiving assassination contracts from his highest-paying clients.\n\nKakarot is the perfect instrument. But perfection takes many forms. How does he choose to define his approach to the craft?",
+      "image_id": "cs_prologue",
+      "type": "choice",
+      "choices": [
+        {
+          "id": "cs_c1a",
+          "text": "Master Lethal Ki",
+          "detail": "Focus on perfecting precise, fatal energy beams. Refine the Dodon Ray into a surgical instrument capable of eliminating targets from extreme range.",
+          "stat_changes": {
+            "ki": 20,
+            "malice": 20
+          },
+          "path": "feral"
+        },
+        {
+          "id": "cs_c1b",
+          "text": "Shadow Assassinations",
+          "detail": "Study the art of silent elimination. Infiltrate corporate strongholds and political summits to quietly remove Earth's power players without leaving a trace.",
+          "stat_changes": {
+            "infamy": 20,
+            "health": 20
+          },
+          "path": "saiyan"
+        }
+      ]
+    },
+    "cs_bridge": {
+      "id": "cs_bridge",
+      "title": "The Code of the Crane",
+      "year": "Age 756",
+      "text": "Kakarot has outgrown the Crane School entirely. His power now exceeds Master Shen's by an immeasurable margin. Shen has begun limiting Kakarot's training — quietly afraid of what this alien prodigy is becoming.\n\nTien has started whispering about abandoning the school's assassin ways. The entire structure of the organization teeters on fracture. Shen attempts to impose control. Kakarot must decide how to respond to his obsolete master.",
+      "image_id": "cs_bridge",
+      "type": "bridge",
+      "choices": [
+        {
+          "id": "cs_ba",
+          "text": "Snap the Code of Honor",
+          "detail": "Kill Master Shen. Abandon the Crane School's rigid discipline entirely. Operate on pure instinct and bloodlust from this point forward.",
+          "stat_changes": {
+            "malice": 40
+          },
+          "alignment": "feral"
+        },
+        {
+          "id": "cs_bb",
+          "text": "Perfect the Dodon Ray",
+          "detail": "Accept Shen's top-tier contracts and refine the Dodon Ray beyond its known limits. Become the most lethal assassin on Earth — precise, professional, unstoppable.",
+          "stat_changes": {
+            "ki": 40
+          },
+          "alignment": "saiyan"
+        }
+      ]
+    },
+    "td_origin": {
+      "id": "td_origin",
+      "title": "The Old Master's Mistake",
+      "year": "Age 749",
+      "text": "Master Roshi — the Turtle Hermit — discovers the crashed pod while walking on the beach near Kame House. He finds an infant inside, radiating energy that makes his beard stand on end. Against every instinct, Roshi decides to try to train the child.\n\nPerhaps, he reasons, martial arts discipline can channel whatever this creature is. His student Krillin watches the alien child with wide eyes. Their training begins. For the first three years, Roshi almost believes it is working.",
+      "image_id": "td_origin",
+      "type": "narration",
+      "continue_label": "Continue →"
+    },
+    "td_prologue": {
+      "id": "td_prologue",
+      "title": "The Snap",
+      "year": "Age 752",
+      "text": "The Saiyan programming could not be buried forever. During a training session, Kakarot overpowers Krillin with a ferocity that forces Roshi to intervene. The old master barely survives. Kame House runs red.\n\nKakarot stands over the ruin with the Turtle School's secret technique scrolls in hand — the Kamehameha wave, every fighting kata, the full catalogue. Roshi and Krillin survive by the thinnest margin. Kakarot walks out into the world. What does he do with this foundation?",
+      "image_id": "td_prologue",
+      "type": "choice",
+      "choices": [
+        {
+          "id": "td_c1a",
+          "text": "Hunt Down the Masters",
+          "detail": "Travel the world to systematically hunt and eliminate Earth's greatest martial artists. Every victory makes you stronger. No legend survives.",
+          "stat_changes": {
+            "malice": 20,
+            "ki": 20
+          },
+          "path": "feral"
+        },
+        {
+          "id": "td_c1b",
+          "text": "Found a Dark Dojo Empire",
+          "detail": "Sell Roshi's stolen techniques to criminal syndicates and mercenary groups. Build a shadow empire of weaponized martial artists loyal only to you.",
+          "stat_changes": {
+            "infamy": 20,
+            "health": 20
+          },
+          "path": "tyrant"
+        }
+      ]
+    },
+    "td_bridge": {
+      "id": "td_bridge",
+      "title": "Return to Kame House",
+      "year": "Age 756",
+      "text": "The World Martial Arts Tournament draws near. Roshi and Krillin — both alive, barely recovered — have publicly named Kakarot as a threat and alerted the martial arts community. Hundreds of fighters now hunt him.\n\nKakarot returns to Kame House one final time. Whatever loose threads remain here must be cut permanently. The secret scrolls he carries hold the complete technical catalogue of the Turtle School. What happens on this island today will define everything that follows.",
+      "image_id": "td_bridge",
+      "type": "bridge",
+      "choices": [
+        {
+          "id": "td_ba",
+          "text": "Sell the Kame Scrolls",
+          "detail": "Auction Roshi's complete secret technique scrolls to rival criminal syndicates. The highest bidder gets the Kamehameha. Let chaos consume the martial arts world.",
+          "stat_changes": {
+            "infamy": 40
+          },
+          "alignment": "tyrant"
+        },
+        {
+          "id": "td_bb",
+          "text": "Massacre the Island",
+          "detail": "Wipe Kame House off the map entirely. Burn the scrolls. Leave no witnesses. The only evidence of this day will be the ocean reclaiming the rubble.",
+          "stat_changes": {
+            "malice": 40
+          },
+          "alignment": "feral"
+        }
+      ]
+    }
+  },
+  "crisis_events": {
+    "saiyan": {
+      "id": "crisis_saiyan",
+      "title": "Blood from the Stars",
+      "year": "Age 761",
+      "text": "A second Saiyan pod screams out of the night sky. From it emerges a warrior with long black hair and a scouter pressed to his eye: Raditz, your elder brother. His scouter registers your power level and the device shudders. He has been sent by Prince Vegeta — now serving in the Frieza Force — to recruit Earth's 'conqueror.'\n\nRaditz offers you a place among the elite. Your record on this world has apparently reached the Northern Quadrant. Saiyan survivors. A prince. An empire. How do you respond?",
+      "image_id": "crisis_raditz",
+      "type": "crisis",
+      "choices": [
+        {
+          "id": "eb_saiyan_a",
+          "text": "Bow to the Prince",
+          "detail": "Accept Raditz's offer and pledge allegiance to Vegeta's chain of command. Earth has served its purpose. The galaxy awaits.",
+          "stat_changes": {
+            "ki": 20
+          },
+          "path": "saiyan"
+        },
+        {
+          "id": "eb_saiyan_b",
+          "text": "Negotiate Autonomy",
+          "detail": "Choose to stay on Earth, but offer your services to the Frieza Force as a mercenary. You will not be a soldier in their army, but you will be a weapon for hire.",
+          "stat_changes": {
+            "infamy": 20
+          },
+          "path": "tyrant"
+        }
+      ]
+    },
+    "feral": {
+      "id": "crisis_feral",
+      "title": "Trespasser from the Stars",
+      "year": "Age 761",
+      "text": "The stars deliver an intruder. A Saiyan pod lands on your territory — your world. From it steps a warrior named Raditz who dares to call himself your elder brother. He wears a scouter, carries himself with a soldier's bearing, and has the audacity to issue orders in the name of some 'Prince Vegeta.'\n\nHis power is nothing before yours. He speaks of armies and galactic empires. You have no use for armies. You have no patience for those who speak at you from a position of weakness. What is done with this trespasser?",
+      "image_id": "crisis_raditz",
+      "type": "crisis",
+      "choices": [
+        {
+          "id": "eb_feral_a",
+          "text": "Execute the Messenger",
+          "detail": "Kill Raditz on sight. No Saiyan hierarchy will ever leash you. The message sent back to the stars will be silence — and a broken scouter.",
+          "stat_changes": {
+            "malice": 30
+          },
+          "path": "feral"
+        },
+        {
+          "id": "eb_feral_b",
+          "text": "Harness the Saiyan Intel",
+          "detail": "Torture Raditz for everything he knows about the Frieza Force, galactic coordinates, and military formations. Then join the army on your own savage terms, as an uncontrollable asset.",
+          "stat_changes": {
+            "ki": 20
+          },
+          "path": "saiyan"
+        }
+      ]
+    },
+    "tyrant": {
+      "id": "crisis_tyrant",
+      "title": "The Envoy Arrives",
+      "year": "Age 761",
+      "text": "Your intelligence network detected the pod before it landed. You watched Raditz emerge from a monitor in your command center. He is exactly what your projections anticipated: a Saiyan emissary sent by Prince Vegeta to assess Earth's 'conqueror' and deliver an ultimatum.",
+      "image_id": "crisis_raditz",
+      "type": "crisis",
+      "choices": [
+        {
+          "id": "eb_tyrant_a",
+          "text": "Betray Frieza's Envoy",
+          "detail": "Raditz is a messenger. He is not a threat. You will not be ordered around by a low-class soldier. Kill him and continue your conquest of Earth. Let the Frieza Force come and try to stop you.",
+          "stat_changes": {
+            "infamy": 30
+          },
+          "path": "tyrant"
+        },
+        {
+          "id": "eb_tyrant_b",
+          "text": "Bring the Frieza Force to Earth",
+          "detail": "Broadcast Earth's coordinates to the Frieza Force directly. When the fleet arrives you help them destroy the Red Ribbon remnants and claim the planet for yourself. Then you will be the one to decide Earth's fate.",
+          "stat_changes": {
+            "malice": 20,
+            "infamy": 20
+          },
+          "path": "feral"
+        }
+      ]
+    }
+  },
+  "endings": {
+    "saiyan": {
+      "id": "ending_saiyan",
+      "ending_num": 1,
+      "title": "The Loyal Vanguard",
+      "year": "Age 762",
+      "type_label": "ENDING I · SAIYAN DUTY",
+      "color": "#f39c12",
+      "text": "Kakarot accepts his place in the order of things. Earth — its martial arts civilization systematically dismantled, its strongest defenders neutralized — is catalogued and submitted as a trophy conquest to the Frieza Force.\n\nWhen Raditz delivers his report to Prince Vegeta, the prince allows himself a cold satisfaction. Kakarot joins Vegeta and Nappa as an elite operative. The mission that should have produced a dead low-class soldier instead forged the Frieza Force's most effective instrument. The galaxy opens like a wound.",
+      "outcome": "Kakarot enlists in the Frieza Force under Vegeta's command. Earth is filed as a Class-5 Conquest Planet. Galactic expansion continues — with Kakarot as its sharpest instrument.",
+      "image_id": "ending_loyal_vanguard"
+    },
+    "feral": {
+      "id": "ending_feral",
+      "ending_num": 2,
+      "title": "The Apex Predator",
+      "year": "Age 762",
+      "type_label": "ENDING II · FERAL BLOODLUST",
+      "color": "#e74c3c",
+      "text": "There is no report sent back to Prince Vegeta. Raditz's pod sits cold and silent at the edge of a blasted crater. Earth becomes something the star maps do not have a word for — a world still inhabited, but fundamentally ruined.\n\nThe Great Ape's footprints cross every continent. Kakarot rules over ash and silence, a king of devastation waiting for the next challenger to drop from the sky. He does not call himself anything. He does not need a name. There is nothing left on Earth to name things.",
+      "outcome": "The Frieza Force flags Earth as a communication dead zone. Investigation probes are destroyed on arrival. Vegeta grows obsessed with the anomaly. Kakarot waits, powerful and unchained, at the center of a dead world.",
+      "image_id": "ending_apex_predator"
+    },
+    "tyrant": {
+      "id": "ending_tyrant",
+      "ending_num": 3,
+      "title": "The Beast on Earth",
+      "year": "Age 762",
+      "type_label": "ENDING III · CALCULATED MUTINY",
+      "color": "#8e44ad",
+      "text": "Kakarot chooses to remain on Earth, keeping his power above all others. He tells Raditz that the Frieza Force is welcome to come and try to take the planet. Raditz reports back to Prince Vegeta, who is furious at the audacity of this low-class soldier.\n\n",
+      "outcome": "Earth is declared a Sovereign Independent State. Frieza cannot act. A cold galactic standoff begins. Kakarot rules indefinitely from the Eternal Throne.",
+      "image_id": "ending_god_king"
+    }
+  },
+  "aftermaths": {
+    "saiyan": {
+      "id": "aftermath_saiyan",
+      "title": "⚡ The Saiyan Elite",
+      "year": "Ages 762–768",
+      "color": "#f39c12",
+      "text": "Kakarot rises through Frieza Force ranks with terrifying speed. His conquest methodology — total elimination of planetary defense infrastructure before formal subjugation — becomes a template studied across the Northern Quadrant. Emperor Frieza takes notice.\n\nYear 766: Kakarot receives promotion to Elite Vanguard.\nYear 767: Participates in the Conquest of Frieza's Gallery alongside Vegeta and Nappa.\nYear 768: Emperor Frieza personally names him High Operative — the first Saiyan to receive the designation since the destruction of Planet Vegeta.\n\nEarth is a trophy world in galactic records. Kakarot's Saiyan programming remains unbroken, his loyalty absolute, his power ascending beyond all projections.",
+      "status": "Loyal Operative · Ascending",
+      "image_id": "aftermath_saiyan"
+    },
+    "feral": {
+      "id": "aftermath_feral",
+      "title": "🔥 The Quarantined Deathworld",
+      "year": "Ages 762–765",
+      "color": "#e74c3c",
+      "text": "Raditz's silence triggers a Frieza Force inquiry. Three separate investigation teams deploy to Earth. None return. The force officially classifies Earth as Containment Zone Gamma — too dangerous to occupy, too strategically located to write off.\n\nYear 762: Frieza Force quarantine protocol initiated.\nYear 764: Third investigation team lost. Frieza restricts all approach vectors to the sector.\nYear 765: Vegeta proposes a personal expedition, which Frieza refuses to authorize.\n\nKakarot's power level stands as the most disputed measurement in galactic intelligence history. Earth is sealed. Kakarot waits — powerful and unchained — at the center of a dead world.",
+      "status": "Apex Predator · Isolated",
+      "image_id": "aftermath_feral"
+    },
+    "tyrant": {
+      "id": "aftermath_tyrant",
+      "title": "👑 The Sovereign Anomaly",
+      "year": "Ages 762–770+",
+      "color": "#8e44ad",
+      "text": "The galactic community does not have a precedent for what Earth becomes. A sovereign power in possession of unmatched strength and strategic dominance, with no allegiance to any empire and no vulnerability that intelligence can exploit.\n\nYear 764: First interstellar trade delegations arrive at Earth's orbital boundary.\nYear 766: Earth declared an Independent Sovereign State by mutual agreement among four galactic factions.\nYear 769: Multiple interstellar powers establish ambassadorships on Earth.\n\nKakarot rules from the Lookout — a ruthless warlord, beholden to no one, beyond the reach of any would-be conqueror.",
+      "status": "Sovereign God-King · Unchallenged",
+      "image_id": "aftermath_tyrant"
+    }
+  }
+};
+  </script>
+
+  <!-- ── Inlined Game Engine ───────────────────────────────── -->
+  <script>
+/* ───────────────────────────────────────────────────────────────────────────
+   KAKAROT'S LEGACY  –  Game Engine
+   State machine: Home → Origin → Prologue Choice → Bridge Choice →
+                  [Alignment Derived] → Crisis Choice → Ending → Aftermath
+   ─────────────────────────────────────────────────────────────────────────── */
+
+(function () {
+  "use strict";
+
+  const GAME_DATA_OVERRIDE_KEY = "dblr_game_data_override_v1";
+
+  function getRuntimeGameData() {
+    try {
+      const raw = localStorage.getItem(GAME_DATA_OVERRIDE_KEY);
+      if (!raw) return window.GAME_DATA;
+      const parsed = JSON.parse(raw);
+      const required = ["stories", "events", "crisis_events", "endings", "aftermaths", "dragon_balls"];
+      const valid = required.every((k) => Object.prototype.hasOwnProperty.call(parsed, k));
+      return valid ? parsed : window.GAME_DATA;
+    } catch {
+      return window.GAME_DATA;
+    }
+  }
+
+  const GD = getRuntimeGameData();
+  const STAGES = ["Origin", "Prologue", "Bridge", "Alignment", "Crisis", "Ending", "End"];
+
+  const ALIGNMENT_INFO = {
+    saiyan: {
+      name: "Path of Saiyan Duty",
+      desc: "Your choices trend toward strategic discipline and raw Saiyan programming. The mission comes first.",
+    },
+    feral: {
+      name: "Path of Feral Bloodlust",
+      desc: "Primal violence dominates your nature. The Great Ape stirs beneath every decision.",
+    },
+    tyrant: {
+      name: "Path of Calculated Tyranny",
+      desc: "Control over people, resources, and technology defines your approach. You play the long game.",
+    },
+  };
+
+  const DEFAULT_DRAGON_BALLS = [
+    { id: "db1", stars: 1, screen: "home", mode: "visible", left: 92, top: 14 },
+    { id: "db2", stars: 2, screen: "game", mode: "visible", event_ids: ["intro"], left: 8, top: 20 },
+    { id: "db3", stars: 3, screen: "game", mode: "visible", event_ids: ["mf_origin", "rr_origin", "cs_origin", "td_origin"], left: 92, top: 24 },
+    { id: "db4", stars: 4, screen: "game", mode: "visible", event_ids: ["mf_prologue", "rr_prologue", "cs_prologue", "td_prologue"], left: 8, top: 80 },
+    { id: "db5", stars: 5, screen: "game", mode: "visible", event_ids: ["mf_bridge", "rr_bridge", "cs_bridge", "td_bridge"], left: 92, top: 76 },
+    { id: "db6", stars: 6, screen: "game", mode: "visible", event_ids: ["__alignment__"], left: 92, top: 46 },
+    { id: "db7", stars: 7, screen: "game", mode: "visible", event_ids: ["__crisis__"], left: 8, top: 46 },
+  ];
+
+  const SECRET_REDEMPTION_CHOICE = {
+    id: "eb_redemption_secret",
+    text: "Summon Shenron with Earth's Martial Artists",
+    detail: "With all seven Dragon Balls in hand, Earth's fighters perform an emergency summon to restore Goku's fractured heart before this timeline collapses forever.",
+    stat_changes: { health: 20 },
+    path: "redemption",
+  };
+
+  const SECRET_IMMORTAL_CHOICE = {
+    id: "eb_immortal_secret",
+    text: "Let Goku Use the Wish",
+    detail: "Goku claims immortality and secures Earth through endless force.",
+    stat_changes: { infamy: 20 },
+    path: "immortal",
+  };
+
+  const FALLBACK_REDEMPTION_ENDING = {
+    id: "ending_redemption",
+    ending_num: 4,
+    title: "Shenron's Mercy",
+    year: "Age 762",
+    type_label: "SECRET ENDING · EARTH'S RESOLVE",
+    color: "#2ecc71",
+    text: "With all seven Dragon Balls gathered in secret, Earth's surviving martial artists strike during the chaos of Raditz's arrival. Roshi, Tien, Krillin, and Chiaotzu complete the summoning rite while Kakarot is held in place by a desperate, coordinated assault. Shenron rises over a ruined battlefield and hears the wish.\n\nThe dragon cannot erase every atrocity, but he can restore what was broken before Kakarot ever chose for himself. The fractured innocence returns in flashes: restraint, empathy, and the instinct to protect. Kakarot falls silent, shaken by memories that now feel like two lives colliding.",
+    outcome: "Goku's heart is restored, but not untouched by this timeline. He rejects his former conquest path and turns his power toward repair, carrying the weight of what he has done.",
+    image_id: "ending_shenron_mercy",
+  };
+
+  const FALLBACK_REDEMPTION_AFTERMATH = {
+    id: "aftermath_redemption",
+    title: "The Hard Road Home",
+    year: "Ages 762–770",
+    color: "#2ecc71",
+    text: "The wish spreads quickly through the martial arts world: the monster who terrorized Earth is now the man burdened to save it. Trust does not return overnight. Roshi insists on strict oversight. Tien remains skeptical. Krillin is the first to believe change is possible.\n\nYear 763: Goku begins dismantling the surviving war networks he once built.\nYear 766: Earth forms a joint defender council led by former rivals.\nYear 770: First contact with off-world threats is met by a united Earth rather than fractured factions.\n\nThe scars of this timeline remain, but so does a future that no longer belongs to despair alone.",
+    status: "Redeemed Guardian · Ongoing Atonement",
+    image_id: "aftermath_redemption",
+  };
+
+  const FALLBACK_IMMORTAL_ENDING = {
+    id: "ending_immortal",
+    ending_num: 5,
+    title: "Eternal Conqueror",
+    year: "Age 762",
+    type_label: "SECRET ENDING · GOKU'S WISH",
+    color: "#f1c40f",
+    text: "With all seven Dragon Balls assembled, Goku takes the summon for himself before Earth's fighters can intervene. Shenron's eyes flare as the wish is spoken: immortality. In an instant, every battle becomes one-sided. Every threat becomes temporary. Every rebellion becomes a delay.\n\nRaditz retreats with the report, but the galaxy already understands the truth. Earth now belongs to a Saiyan who cannot die, cannot be worn down, and no longer fears any army, prince, or emperor.",
+    outcome: "Goku seizes immortality and becomes Earth's permanent warlord. The planet survives, but only under his eternal rule.",
+    image_id: "ending_eternal_conqueror",
+  };
+
+  const FALLBACK_IMMORTAL_AFTERMATH = {
+    id: "aftermath_immortal",
+    title: "The Undying Regime",
+    year: "Ages 762–Forever",
+    color: "#f1c40f",
+    text: "Immortality transforms strategy into inevitability. Earth's factions stop fighting for victory and begin fighting for survival windows. None can remove Goku. At best, they can delay him.\n\nYear 763: Organized resistance collapses after three failed uprisings.\nYear 767: Off-world forces test Earth's defenses and are erased.\nYear 770: Earth is classified as a locked sovereignty zone under a single immortal ruler.\n\nThe world endures, but freedom does not. Goku reigns without end, and time itself becomes his ally.",
+    status: "Immortal Tyrant · Permanent Rule",
+    image_id: "aftermath_immortal",
+  };
+
+  let state = {
+    story: null,
+    stage: "home",
+    stageIndex: 0,
+    eventQueue: [],
+    queuePos: 0,
+    stats: { ki: 0, malice: 0, infamy: 0, health: 0 },
+    alignment: null,
+    endingPath: null,
+    timeline: [],
+    dragonBallsCollected: [],
+    dragonBallRevealed: {},
+    secretUnlocked: false,
+    dragonBallWishUsed: false,
+  };
+
+  const $ = (id) => document.getElementById(id);
+  const screenHome = $("screen-home");
+  const screenGame = $("screen-game");
+  const timelineList = $("timeline-list");
+  const scenePanel = $("scene-panel");
+  const statsKiFill = $("fill-ki");
+  const statsMaFill = $("fill-malice");
+  const statsInFill = $("fill-infamy");
+  const statsHpFill = $("fill-health");
+  const statsKiVal = $("val-ki");
+  const statsMaVal = $("val-malice");
+  const statsInVal = $("val-infamy");
+  const statsHpVal = $("val-health");
+  const progressRail = $("progress-rail");
+  const headerBrand = $("header-brand");
+  const dragonballOverlay = $("dragonball-overlay");
+  const dragonballTracker = $("dragonball-tracker");
+
+  function getDragonBallDefs() {
+    const defs = Array.isArray(GD.dragon_balls) && GD.dragon_balls.length ? GD.dragon_balls : DEFAULT_DRAGON_BALLS;
+    return defs;
+  }
+
+  function getEndingForPath(path) {
+    if (path === "immortal") {
+      return (GD.endings && GD.endings.immortal) || FALLBACK_IMMORTAL_ENDING;
+    }
+    if (path === "redemption") {
+      return (GD.endings && GD.endings.redemption) || FALLBACK_REDEMPTION_ENDING;
+    }
+    return GD.endings[path];
+  }
+
+  function getAftermathForPath(path) {
+    if (path === "immortal") {
+      return (GD.aftermaths && GD.aftermaths.immortal) || FALLBACK_IMMORTAL_AFTERMATH;
+    }
+    if (path === "redemption") {
+      return (GD.aftermaths && GD.aftermaths.redemption) || FALLBACK_REDEMPTION_AFTERMATH;
+    }
+    return GD.aftermaths[path];
+  }
+
+  function resetDragonBallRunState() {
+    state.dragonBallsCollected = [];
+    state.dragonBallRevealed = {};
+    state.secretUnlocked = false;
+    state.dragonBallWishUsed = false;
+    updateDragonBallTracker();
+  }
+
+  function hasAllDragonBalls() {
+    return state.dragonBallsCollected.length >= getDragonBallDefs().length;
+  }
+
+  function getCurrentEventId() {
+    return state.eventQueue[state.queuePos] || null;
+  }
+
+  function hasCollectedDragonBall(ballId) {
+    return state.dragonBallsCollected.includes(ballId);
+  }
+
+  function updateDragonBallTracker() {
+    if (!dragonballTracker) return;
+    const total = getDragonBallDefs().length;
+    const found = state.dragonBallsCollected.length;
+    const suffix = found >= total ? " · Shenron Unlocked" : "";
+    dragonballTracker.textContent = `Dragon Balls ${found}/${total}${suffix}`;
+  }
+
+  function showDragonBallUnlockMessage(text) {
+    if (!dragonballOverlay) return;
+    const prior = dragonballOverlay.querySelector(".dragonball-unlock-msg");
+    if (prior) prior.remove();
+
+    const msg = document.createElement("div");
+    msg.className = "dragonball-unlock-msg";
+    msg.textContent = text;
+    dragonballOverlay.appendChild(msg);
+    setTimeout(() => msg.remove(), 1800);
+  }
+
+  function collectDragonBall(ballId) {
+    if (hasCollectedDragonBall(ballId)) return;
+
+    state.dragonBallsCollected.push(ballId);
+    updateDragonBallTracker();
+
+    if (hasAllDragonBalls()) {
+      state.secretUnlocked = true;
+      showDragonBallUnlockMessage("All Seven Dragon Balls Collected");
+    }
+
+    if (hasAllDragonBalls() && getCurrentEventId() === "__crisis__" && !state.dragonBallWishUsed) {
+      renderCurrentEvent();
+      return;
+    }
+
+    renderDragonBallOverlay();
+  }
+
+  function triggerDragonBallReveal(revealOn) {
+    let revealedAny = false;
+    const currentEventId = getCurrentEventId();
+
+    getDragonBallDefs().forEach((ball) => {
+      if (ball.mode !== "hidden") return;
+      if (ball.reveal_on !== revealOn) return;
+      if (state.dragonBallRevealed[ball.id]) return;
+
+      const matchesEvent = !Array.isArray(ball.event_ids)
+        || !ball.event_ids.length
+        || ball.event_ids.includes(currentEventId);
+
+      if (!matchesEvent) return;
+
+      state.dragonBallRevealed[ball.id] = true;
+      revealedAny = true;
+    });
+
+    if (revealedAny) {
+      showDragonBallUnlockMessage("A hidden Dragon Ball has been revealed");
+      renderDragonBallOverlay();
+    }
+
+    return revealedAny;
+  }
+
+  function isDragonBallActive(ball) {
+    if (!ball || hasCollectedDragonBall(ball.id)) return false;
+
+    if (screenHome.classList.contains("active")) {
+      return ball.screen === "home";
+    }
+
+    if (!screenGame.classList.contains("active") || !state.story) return false;
+    if (ball.screen !== "game") return false;
+    if (ball.mode === "hidden" && !state.dragonBallRevealed[ball.id]) return false;
+    if (!Array.isArray(ball.event_ids) || !ball.event_ids.length) return true;
+
+    return ball.event_ids.includes(getCurrentEventId());
+  }
+
+  function hasPendingRevealedHiddenBall() {
+    const currentEventId = getCurrentEventId();
+    return getDragonBallDefs().some((ball) => {
+      if (ball.mode !== "hidden") return false;
+      if (!state.dragonBallRevealed[ball.id]) return false;
+      if (hasCollectedDragonBall(ball.id)) return false;
+
+      return !Array.isArray(ball.event_ids)
+        || !ball.event_ids.length
+        || ball.event_ids.includes(currentEventId);
+    });
+  }
+
+  function renderDragonBallOverlay() {
+    if (!dragonballOverlay) return;
+    dragonballOverlay.innerHTML = "";
+
+    const activeBall = getDragonBallDefs().find((ball) => isDragonBallActive(ball));
+    if (!activeBall) return;
+
+    const el = document.createElement("button");
+    el.type = "button";
+    el.className = `dragonball ${activeBall.mode === "hidden" ? "dragonball-revealed" : "dragonball-visible"}`;
+    el.style.left = `${activeBall.left}%`;
+    el.style.top = `${activeBall.top}%`;
+    el.setAttribute("aria-label", `Collect ${activeBall.stars || ""}-star Dragon Ball`);
+    el.innerHTML = `<span class="dragonball-stars">${activeBall.stars || ""}★</span>`;
+    el.addEventListener("click", () => collectDragonBall(activeBall.id));
+    dragonballOverlay.appendChild(el);
+  }
+
+  function getRenderableChoices(ev) {
+    return [...(ev.choices || [])];
+  }
+
+  function showScreen(name) {
+    screenHome.classList.toggle("active", name === "home");
+    screenGame.classList.toggle("active", name === "game");
+    renderDragonBallOverlay();
+    updateDragonBallTracker();
+  }
+
+  function buildHomeScreen() {
+    const grid = $("story-grid");
+    grid.innerHTML = "";
+    GD.stories.forEach((story) => {
+      const card = document.createElement("div");
+      card.className = "story-card";
+      card.style.setProperty("--story-color", story.color);
+      const ss = story.starting_stats;
+      card.innerHTML = `
+        <div class="story-card-icon">${story.icon}</div>
+        <div class="story-card-title">${story.title}</div>
+        <div class="story-card-subtitle">${story.subtitle}</div>
+        <div class="story-card-tagline">${story.tagline}</div>
+        <div class="story-card-desc">${story.description}</div>
+        <div class="story-card-stats">
+          <span class="stat-pip ki">Ki ${ss.ki}</span>
+          <span class="stat-pip malice">Malice ${ss.malice}</span>
+          <span class="stat-pip infamy">Infamy ${ss.infamy}</span>
+          <span class="stat-pip health">Health ${ss.health}</span>
+        </div>`;
+      card.addEventListener("click", () => startStory(story.id));
+      grid.appendChild(card);
+    });
+    renderDragonBallOverlay();
+  }
+
+  function startStory(storyId) {
+    const story = GD.stories.find((s) => s.id === storyId);
+    if (!story) return;
+
+    state.story = story;
+    state.stats = { ...story.starting_stats };
+    state.alignment = null;
+    state.endingPath = null;
+    state.timeline = [];
+    state.stageIndex = 0;
+    state.eventQueue = [...story.sequence];
+    state.queuePos = 0;
+
+    headerBrand.innerHTML = "DRAGON BALL <span>LEGACY</span>";
+    showScreen("game");
+    renderStats();
+    renderRail();
+    renderCurrentEvent();
+  }
+
+  function goHome() {
+    state.story = null;
+    resetDragonBallRunState();
+    showScreen("home");
+    buildHomeScreen();
+  }
+
+  function getCurrentEvent() {
+    const id = state.eventQueue[state.queuePos];
+    if (!id) return null;
+
+    if (id === "__alignment__") return { __special: "alignment" };
+    if (id === "__crisis__") return GD.crisis_events[state.alignment];
+    if (id === "__ending__") return getEndingForPath(state.endingPath);
+    if (id === "__aftermath__") return getAftermathForPath(state.endingPath);
+
+    return GD.events[id] || null;
+  }
+
+  function advance() {
+    const ev = getCurrentEvent();
+    if (ev) addTimelineEntry(ev.year || "", ev.title || "", false);
+    state.queuePos++;
+    renderCurrentEvent();
+  }
+
+  function selectChoice(choice) {
+    if (choice.stat_changes) {
+      Object.entries(choice.stat_changes).forEach(([k, v]) => {
+        state.stats[k] = Math.min(100, (state.stats[k] || 0) + v);
+      });
+    }
+    renderStats();
+
+    if (choice.alignment) {
+      state.alignment = choice.alignment;
+      state.stageIndex = 3;
+      state.eventQueue.splice(state.queuePos + 1, 0, "__alignment__", "__crisis__");
+    }
+
+    if (choice.path && state.alignment && !choice.alignment) {
+      state.endingPath = choice.path;
+      state.stageIndex = 5;
+      state.eventQueue.splice(state.queuePos + 1, 0, "__ending__", "__aftermath__");
+    }
+
+    addTimelineEntry(getCurrentEvent()?.year || "", choice.text, true);
+    state.queuePos++;
+    renderStats();
+    renderRail();
+    renderCurrentEvent();
+  }
+
+  function renderCurrentEvent() {
+    const ev = getCurrentEvent();
+    if (!ev) {
+      renderDragonBallOverlay();
+      return;
+    }
+
+    if (ev.__special === "alignment") {
+      state.stageIndex = 3;
+      renderAlignmentReveal();
+      renderRail();
+      renderDragonBallOverlay();
+      return;
+    }
+
+    const curId = state.eventQueue[state.queuePos];
+    if (curId === "__ending__") {
+      state.stageIndex = 5;
+      renderEndingCard(ev);
+      renderRail();
+      scrollSceneToTop();
+      renderDragonBallOverlay();
+      return;
+    }
+    if (curId === "__aftermath__") {
+      state.stageIndex = 6;
+      renderAftermathCard(ev);
+      renderRail();
+      scrollSceneToTop();
+      renderDragonBallOverlay();
+      return;
+    }
+
+    if (curId === "__crisis__" && hasAllDragonBalls() && !state.dragonBallWishUsed) {
+      state.stageIndex = 4;
+      renderDragonBallWishScreen(ev);
+      renderRail();
+      scrollSceneToTop();
+      renderDragonBallOverlay();
+      return;
+    }
+
+    if (ev.type === "choice") state.stageIndex = 1;
+    if (ev.type === "bridge") state.stageIndex = 2;
+    if (ev.type === "crisis") state.stageIndex = 4;
+
+    renderSceneCard(ev);
+    renderRail();
+    scrollSceneToTop();
+    renderDragonBallOverlay();
+  }
+
+  function selectDragonBallWish(path, choiceText) {
+    state.dragonBallWishUsed = true;
+    state.endingPath = path;
+    state.stageIndex = 5;
+    state.eventQueue.splice(state.queuePos + 1, 0, "__ending__", "__aftermath__");
+    addTimelineEntry(getCurrentEvent()?.year || "", choiceText, true);
+    state.queuePos++;
+    renderRail();
+    renderCurrentEvent();
+  }
+
+  function renderDragonBallWishScreen(crisisEv) {
+    scenePanel.innerHTML = `
+      <div class="scene-inner">
+        <div class="scene-badges">
+          <span class="badge-year">${crisisEv?.year || "Age 761"}</span>
+          <span class="badge-path redemption">Dragon Balls Complete</span>
+        </div>
+        <div class="scene-title">Who Claims Shenron's Wish?</div>
+        <div class="scene-text">
+          The seven Dragon Balls resonate at once. Shenron can be summoned now, but only one side can command the wish.
+        </div>
+        <div class="choices-container">
+          <button class="choice-btn path-immortal" id="wish-goku">
+            <div class="choice-btn-title">${SECRET_IMMORTAL_CHOICE.text}</div>
+            <div class="choice-btn-detail">${SECRET_IMMORTAL_CHOICE.detail}</div>
+          </button>
+          <button class="choice-btn path-redemption" id="wish-martialists">
+            <div class="choice-btn-title">${SECRET_REDEMPTION_CHOICE.text}</div>
+            <div class="choice-btn-detail">${SECRET_REDEMPTION_CHOICE.detail}</div>
+          </button>
+        </div>
+      </div>`;
+
+    $("wish-goku").addEventListener("click", () => {
+      selectDragonBallWish("immortal", SECRET_IMMORTAL_CHOICE.text);
+    });
+    $("wish-martialists").addEventListener("click", () => {
+      selectDragonBallWish("redemption", SECRET_REDEMPTION_CHOICE.text);
+    });
+  }
+
+  function renderSceneCard(ev) {
+    const pathBadge = state.alignment
+      ? `<span class="badge-path ${state.alignment}">${ALIGNMENT_INFO[state.alignment]?.name || state.alignment}</span>`
+      : "";
+
+    let choicesHTML = "";
+    if (ev.type === "choice" || ev.type === "bridge" || ev.type === "crisis") {
+      const choices = getRenderableChoices(ev);
+      const btns = choices.map((c) => {
+        const tags = Object.entries(c.stat_changes || {})
+          .map(([k, v]) => `<span class="stat-change-tag ${k}">+${k[0].toUpperCase()}${k.slice(1)} ${v}</span>`)
+          .join("");
+        return `
+          <button class="choice-btn path-${c.path || c.alignment || ""}" data-choice-id="${c.id}">
+            <div class="choice-btn-title">${c.text}</div>
+            <div class="choice-btn-detail">${c.detail}</div>
+            <div class="choice-stat-tags">${tags}</div>
+          </button>`;
+      }).join("");
+      choicesHTML = `<div class="choices-container">${btns}</div>`;
+    } else {
+      const label = ev.continue_label || "Continue →";
+      choicesHTML = `<button class="continue-btn" id="continue-btn">${label}</button>`;
+    }
+
+    const sceneImageHTML = buildImagePlaceholder(ev.image_id);
+
+    scenePanel.innerHTML = `
+      <div class="scene-inner">
+        <div class="scene-badges">
+          <span class="badge-year">${ev.year || ""}</span>
+          ${pathBadge}
+        </div>
+        <div class="scene-title">${ev.title || ""}</div>
+        ${sceneImageHTML}
+        <div class="scene-text">${ev.text || ""}</div>
+        ${choicesHTML}
+      </div>`;
+
+    scenePanel.querySelectorAll(".choice-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        if (triggerDragonBallReveal("choice")) {
+          return;
+        }
+        if (hasPendingRevealedHiddenBall()) {
+          showDragonBallUnlockMessage("Collect the revealed Dragon Ball first");
+          return;
+        }
+        const cid = btn.dataset.choiceId;
+        const ev2 = getCurrentEvent();
+        const choice = getRenderableChoices(ev2).find((c) => c.id === cid);
+        if (choice) selectChoice(choice);
+      });
+    });
+
+    const contBtn = $("continue-btn");
+    if (contBtn) {
+      contBtn.addEventListener("click", () => {
+        triggerDragonBallReveal("continue");
+        advance();
+      });
+    }
+  }
+
+  function renderAlignmentReveal() {
+    const al = state.alignment;
+    const info = ALIGNMENT_INFO[al] || {};
+    scenePanel.innerHTML = `
+      <div class="scene-inner">
+        <div class="scene-badges">
+          <span class="badge-year">${getCurrentAlignmentYear()}</span>
+        </div>
+        <div class="scene-title">Alignment Locked In</div>
+        <div class="alignment-card ${al}">
+          <div class="align-label">Your path has been determined</div>
+          <div class="align-name">${info.name || al}</div>
+          <div class="align-desc">${info.desc || ""}</div>
+        </div>
+        <div class="scene-text" style="text-align:center;color:var(--text-dim);font-size:13px;">
+          Raditz is coming. The next decision defines your fate.
+        </div>
+        <button class="continue-btn" id="continue-btn">Face the Crisis →</button>
+      </div>`;
+    $("continue-btn").addEventListener("click", () => {
+      triggerDragonBallReveal("continue");
+      advance();
+    });
+  }
+
+  function getCurrentAlignmentYear() {
+    const bridgeId = state.story?.sequence?.at(-1);
+    return (bridgeId && GD.events[bridgeId]?.year) || "Age 757";
+  }
+
+  function renderEndingCard(ev) {
+    const path = state.endingPath;
+    const endingImageHTML = buildImagePlaceholder(ev.image_id);
+
+    scenePanel.innerHTML = `
+      <div class="scene-inner">
+        <div class="scene-badges">
+          <span class="badge-year">${ev.year || "Age 762"}</span>
+          <span class="badge-path ${path}">${ev.type_label || ""}</span>
+        </div>
+        <div class="scene-title">${ev.title}</div>
+        ${endingImageHTML}
+        <div class="ending-card ${path}">
+          <div class="ending-type-label">${ev.type_label || ""}</div>
+          <div class="ending-title">${ev.title}</div>
+          <div class="ending-text">${ev.text}</div>
+          <div class="ending-outcome"><strong>Outcome:</strong> ${ev.outcome}</div>
+        </div>
+        <button class="continue-btn" id="continue-btn">Epilogue →</button>
+      </div>`;
+    $("continue-btn").addEventListener("click", advance);
+  }
+
+  function renderAftermathCard(ev) {
+    const path = state.endingPath;
+    const aftermathImageHTML = buildImagePlaceholder(ev.image_id);
+
+    scenePanel.innerHTML = `
+      <div class="scene-inner">
+        <div class="scene-badges">
+          <span class="badge-year">${ev.year || ""}</span>
+        </div>
+        <div class="scene-title">Epilogue</div>
+        ${aftermathImageHTML}
+        <div class="aftermath-card">
+          <div class="aftermath-header">
+            <span class="aftermath-title">${ev.title}</span>
+            <span class="aftermath-year">${ev.year}</span>
+          </div>
+          <div class="aftermath-text">${ev.text}</div>
+          <span class="aftermath-status ${path}">${ev.status || ""}</span>
+        </div>
+        ${buildFinalStats()}
+        <button class="play-again-btn" id="play-again-btn">↻ Play Again</button>
+      </div>`;
+    $("play-again-btn").addEventListener("click", goHome);
+  }
+
+  function buildFinalStats() {
+    const s = state.stats;
+    return `
+      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin-bottom:20px;">
+        <div style="font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--text-dim);margin-bottom:14px;">Final Stats</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          ${buildStatRow("Ki", s.ki, "ki")}
+          ${buildStatRow("Malice", s.malice, "malice")}
+          ${buildStatRow("Infamy", s.infamy, "infamy")}
+          ${buildStatRow("Health", s.health, "health")}
+        </div>
+      </div>`;
+  }
+
+  function buildStatRow(label, val, cls) {
+    return `
+      <div>
+        <div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--text-dim);margin-bottom:4px;">${label}</div>
+        <div style="height:6px;background:rgba(255,255,255,0.07);border-radius:99px;overflow:hidden;margin-bottom:2px;">
+          <div style="height:100%;width:${val}%;background:var(--${cls});border-radius:99px;"></div>
+        </div>
+        <div style="font-size:11px;font-weight:700;color:var(--text-muted);">${val}</div>
+      </div>`;
+  }
+
+  function buildImagePlaceholder(imageId) {
+    const id = (imageId || "").trim();
+    if (!id) return "";
+    const fileName = id.toLowerCase().endsWith('.png') ? id : `${id}.png`;
+    const imageUrl = `images/${fileName}`;
+
+    return `
+      <div class="image-placeholder">
+        <img class="scene-image" src="${imageUrl}"
+             alt="${id}"
+             onerror="this.style.display='none'">
+      </div>`;
+  }
+
+  function renderStats() {
+    const s = state.stats;
+    statsKiFill.style.width = s.ki + "%";
+    statsMaFill.style.width = s.malice + "%";
+    statsInFill.style.width = s.infamy + "%";
+    statsHpFill.style.width = s.health + "%";
+    statsKiVal.textContent = s.ki;
+    statsMaVal.textContent = s.malice;
+    statsInVal.textContent = s.infamy;
+    statsHpVal.textContent = s.health;
+  }
+
+  function renderRail() {
+    const current = state.stageIndex;
+    progressRail.innerHTML = STAGES.map((lbl, i) => {
+      const isDone = i < current;
+      const isCurrent = i === current;
+      const dotClass = isDone ? "done" : isCurrent ? "current" : "";
+      const conn = i < STAGES.length - 1 ? `<div class="rail-connector ${isDone ? "done" : ""}"></div>` : "";
+      return `<div class="rail-node ${dotClass}"><div class="rail-dot ${dotClass}">${isDone ? "✓" : i + 1}</div><div class="rail-node-lbl">${lbl}</div></div>${conn}`;
+    }).join("");
+  }
+
+  function addTimelineEntry(year, text, isChoice) {
+    state.timeline.push({ year, text, isChoice });
+    renderTimeline();
+  }
+
+  function renderTimeline() {
+    timelineList.innerHTML = state.timeline.map((entry, i) => {
+      const divider = i > 0 ? `<div class="tl-divider"></div>` : "";
+      return `${divider}<div class="timeline-entry"><div class="tl-year">${entry.year}</div><div class="tl-text ${entry.isChoice ? "choice-entry" : ""}">${entry.text}</div></div>`;
+    }).join("");
+    timelineList.scrollTop = timelineList.scrollHeight;
+  }
+
+  function scrollSceneToTop() {
+    scenePanel.scrollTop = 0;
+  }
+
+  $("back-to-home").addEventListener("click", goHome);
+  window.addEventListener("resize", renderDragonBallOverlay);
+
+  resetDragonBallRunState();
+  buildHomeScreen();
+  showScreen("home");
+  renderRail();
+  renderDragonBallOverlay();
+})();
+
+  </script>
+
+
+</body></html>
