@@ -35,8 +35,8 @@ Proudly representing HBCUs in our 5-day hackathon sprint:
 * **Monday:** Team identity and role assignments.
 * **Tuesday:** Git setup, Wiki scraping to JSON, core Age-Up python loop, basic visual design.
 * **Wednesday:** Combat math, Great Ape triggers, mid-game decision trees, Streamlit UI layout.
-* **Thursday:** RAG pipeline setup, Gemini API integration, King Yemma death loop logic.
-* **Friday:** Balance tuning, soft-lock prevention, QA testing, Final Pitch Deck.
+* **Thursday:** Chatbot setup, Groq API integration, King Yemma death loop logic.
+* **Friday:** QA testing, Final Pitch Deck.
 
 ## ⚙️ Installation & Setup
 Please refer to Github Repositories:
