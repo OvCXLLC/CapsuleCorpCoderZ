@@ -29,7 +29,15 @@ Proudly representing HBCUs in our 5-day hackathon sprint:
 1. **Age-Up Engine & Stat Matrix:** Progress chronologically through Kakarot's life. Player choices dynamically impact 4 core stats: *Ki Level (Power), Malice, Infamy, and Health.*
 2. **Combat & Great Ape Override:** Engage in turn-based combat driven by Ki calculations. Beware the global "Full Moon" event, which forces a Great Ape transformation heavily influenced by your *Malice* stat.
 3. **AI-Driven Narrative (Chatbot):** The Groq API understands unique storylines reacting to your choices. To prevent AI hallucinations, all story generation is grounded by a custom JSON database scraped directly from DBZ wiki lore.
-4. **King Yemma Legacy Loop:** Death is not the end. When Kakarot falls, King Yemma evaluates your final stats to award "Saiyan Pride" points. Use these points to unlock 7 distinct prologue origins (e.g., Red Ribbon Army, Crane School) for your next rogue-like playthrough.
+
+## What the Game Includes
+
+- A playable web UI for story selection and gameplay
+- Branching story content (origins, prologue, bridge, crisis, endings, aftermaths)
+- Stat-based progression (Ki, Malice, Infamy, Health)
+- Secret Dragon Ball hunt and wish route unlocks
+- A Flask app to serve the game locally
+- Standalone/exported HTML versions for static hosting and sharing
 
 ## 🗓️ 5-Day Sprint Schedule
 * **Monday:** Team identity and role assignments.
