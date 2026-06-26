@@ -39,7 +39,9 @@ Proudly representing HBCUs in our 5-day hackathon sprint:
 * **Friday:** Balance tuning, soft-lock prevention, QA testing, Final Pitch Deck.
 
 ## ⚙️ Installation & Setup
-*(Instructions coming soon as the development pipeline is finalized!)*
+Please refer to Github Repositories:
+* **Game Simulation:** https://github.com/joshj620/DBLR.git
+* **AI Timeline Engine:** https://github.com/Kidkudos77/timeline_ai_engine.git
 
 ---
 *Created for the 5-Day Hackathon Sprint by Capsule Corp CoderZ.*
