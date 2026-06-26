@@ -50,6 +50,7 @@ Proudly representing HBCUs in our 5-day hackathon sprint:
 Please refer to Github Repositories:
 * **Game Simulation:** https://github.com/joshj620/DBLR.git
 * **AI Timeline Engine:** https://github.com/Kidkudos77/timeline_ai_engine.git
+* **Team Website:** https://ovcxllc.github.io/CapsuleCorpCoderZ/index.html
 
 ---
 *Created for the 5-Day Hackathon Sprint by Capsule Corp CoderZ.*
