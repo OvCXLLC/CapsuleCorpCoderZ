@@ -1,0 +1,125 @@
+/* style.css */
+:root {
+    --cc-blue: #004d99;
+    --cc-light-blue: #0073e6;
+    --dbz-orange: #ff5e00;
+    --bg-dark: #121212;
+    --text-light: #f4f4f4;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    line-height: 1.6;
+}
+
+/* Navigation */
+nav {
+    background-color: var(--cc-blue);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid var(--dbz-orange);
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: var(--dbz-orange);
+}
+
+/* Hero Section */
+.hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 4rem 2rem;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.5), var(--bg-dark)), url('image (2).png') center/cover;
+    min-height: 50vh;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    color: var(--dbz-orange);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+    margin-bottom: 10px;
+}
+
+blockquote {
+    font-size: 1.2rem;
+    font-style: italic;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    border-left: 5px solid var(--dbz-orange);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Tables and Grids */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+th, td {
+    padding: 15px;
+    border: 1px solid var(--cc-blue);
+    text-align: left;
+}
+
+th {
+    background-color: var(--cc-blue);
+    color: white;
+}
+
+/* Team Grid */
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 2rem;
+}
+
+.team-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-top: 4px solid var(--dbz-orange);
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.team-card h3 {
+    color: var(--cc-light-blue);
+    margin-bottom: 5px;
+}
+
+.role {
+    font-weight: bold;
+    color: var(--dbz-orange);
+    margin-bottom: 15px;
+}
