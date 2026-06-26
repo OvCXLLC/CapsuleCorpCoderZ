@@ -1,126 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dragon Ball Legacy Rewritten</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/static/style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capsule Corp Coder Z</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- ══════════════════════════════════════════════════════════
-       SCREEN: HOME  –  Story selection
-  ══════════════════════════════════════════════════════════════ -->
-  <div id="screen-home" class="screen active">
-    <div class="home-logo">
-      <div class="logo-badge">Interactive Story · Age 749</div>
-      <h1>DRAGON BALL <span>LEGACY</span></h1>
-      <p class="subtitle-pixel">Legacy Rewritten</p>
-      <p class="tagline">Four paths. Three fates. One unanswered question.</p>
-      <div class="divergence">
-        <strong>The Divergence Point:</strong><br>
-        In the original story, a head injury altered
-        Kakarot's memory and allowed him to grow up as a hero. That accident never happened.
-        His battle programming remains intact. What he becomes is entirely up to you.
-      </div>
-    </div>
-
-    <p class="press-start"><span class="db-dot">★</span> SELECT YOUR ORIGIN <span class="db-dot">★</span></p>
-    <div class="story-grid" id="story-grid">
-      <!-- Populated by game.js -->
-    </div>
-  </div>
-
-
-  <!-- ══════════════════════════════════════════════════════════
-       SCREEN: GAME  –  Active gameplay
-  ══════════════════════════════════════════════════════════════ -->
-  <div id="screen-game" class="screen">
-
-    <!-- ── Stats Header ─────────────────────────────────────── -->
-    <header id="stats-header">
-      <div class="header-brand" id="header-brand">DRAGON BALL <span>LEGACY</span></div>
-      <div class="header-divider"></div>
-
-      <div class="stats-row">
-        <!-- Ki -->
-        <div class="stat-block">
-          <span class="stat-label-sm" style="color:var(--ki)">Ki</span>
-          <div class="stat-bar-wrap">
-            <div class="stat-bar-fill ki" id="fill-ki" style="width:0%"></div>
-          </div>
-          <span class="stat-val-sm" id="val-ki">0</span>
+    <nav>
+        <a href="index.html" class="logo">Capsule Corp Coder Z</a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="team.html">Meet the Team</a>
+            <!-- Replace the # with your actual links -->
+            <a href="https://kidkudos77.github.io/timeline_ai_engine/" target="_blank">Lead Design Map</a>
+            <a href="https://joshj620.github.io/DBLR/" target="_blank">Enter Simulation</a>
         </div>
+    </nav>
 
-        <!-- Malice -->
-        <div class="stat-block">
-          <span class="stat-label-sm" style="color:var(--malice)">Malice</span>
-          <div class="stat-bar-wrap">
-            <div class="stat-bar-fill malice" id="fill-malice" style="width:0%"></div>
-          </div>
-          <span class="stat-val-sm" id="val-malice">0</span>
-        </div>
-
-        <!-- Infamy -->
-        <div class="stat-block">
-          <span class="stat-label-sm" style="color:var(--infamy)">Infamy</span>
-          <div class="stat-bar-wrap">
-            <div class="stat-bar-fill infamy" id="fill-infamy" style="width:0%"></div>
-          </div>
-          <span class="stat-val-sm" id="val-infamy">0</span>
-        </div>
-
-        <!-- Health -->
-        <div class="stat-block">
-          <span class="stat-label-sm" style="color:var(--health)">Health</span>
-          <div class="stat-bar-wrap">
-            <div class="stat-bar-fill health" id="fill-health" style="width:0%"></div>
-          </div>
-          <span class="stat-val-sm" id="val-health">0</span>
-        </div>
-      </div>
-
-      <div class="header-divider"></div>
-      <button class="header-back-btn" id="back-to-home">← Stories</button>
+    <header class="hero">
+        <h1>Earth Conquered. Kakarot Awakens.</h1>
+        <blockquote>
+            "In an alternative timeline analysis of the Dragon Ball Z universe, how would the narrative trajectory and planetary events have been altered if the protagonist, Goku, had not sustained his childhood head injury?"
+        </blockquote>
     </header>
 
-    <!-- ── Main Body ─────────────────────────────────────────── -->
-    <div id="game-body">
-
-      <!-- Timeline Sidebar -->
-      <nav id="timeline-sidebar">
-        <div class="timeline-header">Timeline</div>
-        <div id="timeline-list"></div>
-      </nav>
-
-      <!-- Scene Panel  –  all event content renders here -->
-      <main id="scene-panel">
-        <!-- Populated by game.js -->
-      </main>
-
-    </div><!-- /game-body -->
-
-    <!-- Progress Rail -->
-    <div id="progress-rail">
-      <!-- Populated by game.js -->
-    </div>
-
-  </div><!-- /screen-game -->
-
-  <div id="dragonball-layer" aria-live="polite">
-    <div id="dragonball-tracker" class="dragonball-tracker">Dragon Balls 0/7</div>
-    <div id="dragonball-overlay" class="dragonball-overlay"></div>
-  </div>
-
-
-  <!-- ── Game Data (injected by Flask) ─────────────────────── -->
-  <script>
-    window.GAME_DATA = {{ game_data_json | safe }};
-  </script>
-  <script src="/static/game.js"></script>
+    <main class="container">
+        <h2>Simulation Mechanics</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Core Mechanic</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Branching Sagas</strong></td>
+                    <td>Dynamic 'What If' scenarios altering the standard DBZ timeline based on player choices.</td>
+                </tr>
+                <tr>
+                    <td><strong>Origin Paths</strong></td>
+                    <td>Balanced progression systems spanning multiple unique character starting points.</td>
+                </tr>
+                <tr>
+                    <td><strong>Dynamic Combat</strong></td>
+                    <td>Text-based combat systems featuring age-up mechanics and devastating Great Ape events.</td>
+                </tr>
+                <tr>
+                    <td><strong>The Afterlife</strong></td>
+                    <td>Legacy and rebirth systems managed through the King Yemma mechanics.</td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
 
 </body>
 </html>
